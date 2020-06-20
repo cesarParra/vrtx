@@ -38,7 +38,6 @@
     "eslint-plugin-standard": "^4.0.1",
     "globby": "^10.0.2",
     "jest": "^26.0.1",
-    "mocha": "^5.2.0",
     "nyc": "^14.1.1",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.0",
