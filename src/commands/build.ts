@@ -10,9 +10,8 @@ export default class Build extends Command {
     help: flags.help({ char: "h" }),
   };
 
-  static args = [{ name: "file" }];
-
   async run() {
+    console.log("Calling");
     Builder.execute();
   }
 }
