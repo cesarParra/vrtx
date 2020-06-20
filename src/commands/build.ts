@@ -11,7 +11,6 @@ export default class Build extends Command {
   };
 
   async run() {
-    console.log("Calling");
     Builder.execute();
   }
 }

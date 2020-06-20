@@ -1,13 +1,10 @@
-import { test } from "@oclif/test";
-import Build from "./build";
 import Builder from "../parser";
-jest.mock("../parser/Builder");
+import Build from "./build";
+jest.mock("../parser");
 
-describe("build", () => {
-  test
-    .stdout()
-    .command(["build"])
-    .it("runs build", (ctx) => {
-      expect(Builder).toHaveBeenCalled();
-    });
+test("build calls the builder", async () => {
+  Builder.execute = jest.fn();
+
+  await Build.run();
+  expect(Builder.execute).toHaveBeenCalled();
 });
