@@ -1,0 +1,1 @@
+{"version":"0.0.0","commands":{"build":{"id":"build","description":"Transcompiles Vertex code into Apex.","pluginName":"vrtx","pluginType":"core","aliases":[],"examples":["$ vertex build"],"flags":{"help":{"name":"help","type":"boolean","char":"h","description":"show CLI help","allowNo":false}},"args":[]}}}
