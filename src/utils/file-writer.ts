@@ -1,4 +1,4 @@
-import File from "./model/file";
+import File from "../parser/model/file";
 import fs from "fs";
 import path from "path";
 

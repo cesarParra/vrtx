@@ -72,8 +72,7 @@
     "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test": "jest",
     "version": "oclif-dev readme && git add README.md",
-    "build:lint": "rimraf ./lib && npm run lint && tsc",
-    "build": "rimraf ./lib && tsc",
+    "build": "rimraf ./lib && npm run lint && tsc",
     "antlr4ts": "antlr4ts src/antlr/VertexLexer.g4 src/antlr/VertexParser.g4 -o src/parser/base/",
     "lint": "eslint --fix --ext .ts ./src/"
   },

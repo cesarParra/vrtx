@@ -1,7 +1,7 @@
-import { VertexParserListener } from "./../base/VertexParserListener";
+import { VertexParserListener } from "../base/VertexParserListener";
 import { TokenStreamRewriter, ParserRuleContext } from "antlr4ts";
 import { TerminalNode, ErrorNode } from "antlr4ts/tree";
-import { LiteralContext } from "./../base/VertexParser";
+import { LiteralContext } from "../base/VertexParser";
 
 export default class StringTemplateLiteral implements VertexParserListener {
   visitTerminal?: (node: TerminalNode) => void;

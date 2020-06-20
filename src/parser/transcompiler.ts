@@ -2,8 +2,8 @@ import { CharStreams, CommonTokenStream, TokenStreamRewriter } from "antlr4ts";
 import { VertexLexer } from "./base/VertexLexer";
 import { VertexParser } from "./base/VertexParser";
 import { ParseTreeWalker } from "antlr4ts/tree";
-import ConstructorOptionalParams from "./language-addons/constructor-optional-params";
-import StringTemplateLiteral from "./language-addons/string-template-literal";
+import ConstructorOptionalParams from "./language/constructor-optional-params";
+import StringTemplateLiteral from "./language/string-template-literal";
 import { VertexParserListener } from "./base/VertexParserListener";
 
 export default class Transcompiler {

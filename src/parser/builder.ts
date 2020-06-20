@@ -1,7 +1,7 @@
-import FileReader from "./file-reader";
+import FileReader from "../utils/file-reader";
 import rimraf from "rimraf";
 import Transcompiler from "./transcompiler";
-import FileWriter from "./file-writer";
+import FileWriter from "../utils/file-writer";
 import { APEX_METADATA, File, ApexFileBundle } from "./model";
 
 export default class Builder {

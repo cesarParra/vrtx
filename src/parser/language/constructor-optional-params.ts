@@ -1,4 +1,4 @@
-import { VertexParserListener } from "./../base/VertexParserListener";
+import { VertexParserListener } from "../base/VertexParserListener";
 import { TokenStreamRewriter, ParserRuleContext } from "antlr4ts";
 import { TerminalNode, ErrorNode } from "antlr4ts/tree";
 import {
@@ -6,7 +6,8 @@ import {
   ConstructorDeclarationContext,
   FormalParameterListContext,
   OptionalPositionalFormalParametersContext,
-} from "./../base/VertexParser";
+} from "../base/VertexParser";
+import StringBuilder from "../../utils/string-builder";
 
 interface OptionalParameter {
   type: string;
@@ -77,25 +78,31 @@ export default class ConstructorOptionalParams implements VertexParserListener {
   exitOptionalPositionalFormalParameters(
     ctx: OptionalPositionalFormalParametersContext
   ): void {
-    if (ctx.start && ctx.stop) {
-      let buffer = "";
-      this.optionalParameters.forEach((optionalParameter) => {
-        buffer += `${optionalParameter.type} ${optionalParameter.id},`;
-      });
-      buffer = buffer.substring(0, buffer.length - 1); // Removing the trailing comma
-      this.rewriter.replace(ctx.start.tokenIndex, ctx.stop?.tokenIndex, buffer);
+    if (!ctx.stop) {
+      return;
     }
+
+    const buffer = new StringBuilder();
+    this.optionalParameters.forEach((optionalParameter) => {
+      buffer
+        .append(`${optionalParameter.type} ${optionalParameter.id}`)
+        .appendComma();
+    });
+    buffer.removeTrailingComma();
+    this.rewriter.replace(
+      ctx.start.tokenIndex,
+      ctx.stop?.tokenIndex,
+      buffer.build()
+    );
   }
 
   exitConstructorDeclaration(ctx: ConstructorDeclarationContext): void {
     const formalParameters = this.formalParameters;
     const optionalParameters = this.optionalParameters;
-    let constructorBuffer = "";
+    const constructorBuffer = new StringBuilder();
     while (optionalParameters.length) {
-      constructorBuffer += this.createConstructor(
-        ctx,
-        formalParameters,
-        optionalParameters
+      constructorBuffer.append(
+        this.createConstructor(ctx, formalParameters, optionalParameters)
       );
 
       // We create a constructor per optional parameter, eliminating one
@@ -110,7 +117,7 @@ export default class ConstructorOptionalParams implements VertexParserListener {
       }
     }
     if (ctx.stop) {
-      this.rewriter.insertAfter(ctx.stop, constructorBuffer);
+      this.rewriter.insertAfter(ctx.stop, constructorBuffer.build());
     }
 
     this.constructorName = "";
@@ -123,34 +130,28 @@ export default class ConstructorOptionalParams implements VertexParserListener {
     formalParameters: FormalParameter[],
     optionalParameters: OptionalParameter[]
   ): string {
-    let constructorOverload = "\n\n\t";
+    const constructorOverload = new StringBuilder()
+      .appendReturn()
+      .appendReturn()
+      .appendTab();
     this.modifiersStack[this.modifiersStack.length - 1].forEach((modifier) => {
-      constructorOverload += `${modifier} `;
+      constructorOverload.append(`${modifier} `);
     });
-    constructorOverload += this.constructorName + "(";
+    constructorOverload.append(this.constructorName + "(");
     formalParameters.forEach((parameter) => {
-      constructorOverload += `${parameter.type}  ${parameter.id},`;
+      constructorOverload.append(`${parameter.type}  ${parameter.id},`);
     });
-    if (constructorOverload.endsWith(",")) {
-      constructorOverload = constructorOverload.substring(
-        0,
-        constructorOverload.length - 1
-      ); // Removing trailing comma
-    }
-
-    constructorOverload += "){ this(";
+    constructorOverload.removeTrailingComma();
+    constructorOverload.append("){ this(");
     formalParameters.forEach((parameter) => {
-      constructorOverload += `${parameter.id},`;
+      constructorOverload.append(`${parameter.id},`);
     });
     optionalParameters.forEach((optionalParameter) => {
       const parameterValue = optionalParameter.value ?? "null";
-      constructorOverload += `${parameterValue},`;
+      constructorOverload.append(`${parameterValue},`);
     });
-    constructorOverload = constructorOverload.substring(
-      0,
-      constructorOverload.length - 1
-    ); // Removing trailing comma
-    constructorOverload += "); }";
-    return constructorOverload;
+    constructorOverload.removeTrailingComma();
+    constructorOverload.append("); }");
+    return constructorOverload.build();
   }
 }
