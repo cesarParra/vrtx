@@ -2,7 +2,6 @@ import { VertexParserListener } from "./../base/VertexParserListener";
 import { TokenStreamRewriter, ParserRuleContext } from "antlr4ts";
 import { TerminalNode, ErrorNode } from "antlr4ts/tree";
 import { LiteralContext } from "./../base/VertexParser";
-import { string } from "@oclif/command/lib/flags";
 
 export default class StringTemplateLiteral implements VertexParserListener {
   visitTerminal?: (node: TerminalNode) => void;
@@ -16,7 +15,7 @@ export default class StringTemplateLiteral implements VertexParserListener {
     this.rewriter = rewriter;
   }
 
-  enterLiteral(ctx: LiteralContext) {
+  enterLiteral(ctx: LiteralContext): void {
     if (ctx.StringTemplateLiteral() && ctx.stop) {
       const tick = /`/gi;
       let stringContents =

@@ -36,7 +36,7 @@ export default class ConstructorOptionalParams implements VertexParserListener {
     this.rewriter = rewriter;
   }
 
-  enterClassBodyDeclaration(ctx: ClassBodyDeclarationContext) {
+  enterClassBodyDeclaration(ctx: ClassBodyDeclarationContext): void {
     const modifiers: string[] = [];
     ctx.modifier().forEach((modifier) => {
       modifiers.push(modifier.text);
@@ -44,11 +44,12 @@ export default class ConstructorOptionalParams implements VertexParserListener {
     this.modifiersStack.push(modifiers);
   }
 
-  exitClassBodyDeclaration(ctx: ClassBodyDeclarationContext) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  exitClassBodyDeclaration(ctx: ClassBodyDeclarationContext): void {
     this.modifiersStack.pop();
   }
 
-  enterConstructorDeclaration(ctx: ConstructorDeclarationContext) {
+  enterConstructorDeclaration(ctx: ConstructorDeclarationContext): void {
     this.constructorName = ctx.qualifiedName().text;
   }
 
@@ -64,7 +65,7 @@ export default class ConstructorOptionalParams implements VertexParserListener {
     });
   }
 
-  enterFormalParameterList(ctx: FormalParameterListContext) {
+  enterFormalParameterList(ctx: FormalParameterListContext): void {
     ctx.formalParameter().forEach((parameter) => {
       this.formalParameters.push({
         type: parameter.typeRef().text,
@@ -86,7 +87,7 @@ export default class ConstructorOptionalParams implements VertexParserListener {
     }
   }
 
-  exitConstructorDeclaration(ctx: ConstructorDeclarationContext) {
+  exitConstructorDeclaration(ctx: ConstructorDeclarationContext): void {
     const formalParameters = this.formalParameters;
     const optionalParameters = this.optionalParameters;
     let constructorBuffer = "";

@@ -10,7 +10,7 @@ export default class Build extends Command {
     help: flags.help({ char: "h" }),
   };
 
-  async run() {
+  async run(): Promise<void> {
     Builder.execute();
   }
 }
