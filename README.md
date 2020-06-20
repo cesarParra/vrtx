@@ -28,28 +28,25 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`vrtx hello [FILE]`](#vrtx-hello-file)
+* [`vrtx build`](#vrtx-build)
 * [`vrtx help [COMMAND]`](#vrtx-help-command)
 
-## `vrtx hello [FILE]`
+## `vrtx build`
 
-describe the command here
+Transcompiles Vertex code into Apex.
 
 ```
 USAGE
-  $ vrtx hello [FILE]
+  $ vrtx build
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -h, --help  show CLI help
 
 EXAMPLE
-  $ vrtx hello
-  hello world from ./src/hello.ts!
+  $ vertex build
 ```
 
-_See code: [src\commands\hello.ts](https://github.com/cesarParra/vrtx/blob/v0.0.0/src\commands\hello.ts)_
+_See code: [src\commands\build.ts](https://github.com/cesarParra/vrtx/blob/v0.0.0/src\commands\build.ts)_
 
 ## `vrtx help [COMMAND]`
 
