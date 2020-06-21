@@ -15,7 +15,7 @@ export default class Transcompiler {
     const tokenStream = new CommonTokenStream(lexer);
     const parser = new VertexParser(tokenStream);
 
-    // Parse the input, where `compilationUnit` is whatever entry point you defined
+    // `compilationUnit` is the entry point for class files.
     const tree = parser.compilationUnit();
 
     const rewriter = new TokenStreamRewriter(tokenStream);

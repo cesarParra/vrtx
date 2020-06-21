@@ -8,17 +8,10 @@ import {
   OptionalPositionalFormalParametersContext,
 } from "../base/VertexParser";
 import StringBuilder from "../../utils/string-builder";
-
-interface OptionalParameter {
-  type: string;
-  id: string;
-  value?: string;
-}
-
-interface FormalParameter {
-  type: string;
-  id: string;
-}
+import { OptionalParameter, FormalParameter } from "../model";
+import ConstructorBuilder, {
+  IConstructorBuilder,
+} from "../helpers/constructor-builder";
 
 export default class ConstructorOptionalParams implements VertexParserListener {
   visitTerminal?: (node: TerminalNode) => void;
@@ -27,14 +20,19 @@ export default class ConstructorOptionalParams implements VertexParserListener {
   exitEveryRule?: (ctx: ParserRuleContext) => void;
 
   rewriter: TokenStreamRewriter;
+  constructorBuilder: IConstructorBuilder;
 
   private modifiersStack: string[][] = [];
   private constructorName = "";
   private optionalParameters: OptionalParameter[] = [];
   private formalParameters: FormalParameter[] = [];
 
-  constructor(rewriter: TokenStreamRewriter) {
+  constructor(
+    rewriter: TokenStreamRewriter,
+    builder = new ConstructorBuilder()
+  ) {
     this.rewriter = rewriter;
+    this.constructorBuilder = builder;
   }
 
   enterClassBodyDeclaration(ctx: ClassBodyDeclarationContext): void {
@@ -100,9 +98,15 @@ export default class ConstructorOptionalParams implements VertexParserListener {
     const formalParameters = this.formalParameters;
     const optionalParameters = this.optionalParameters;
     const constructorBuffer = new StringBuilder();
+    const modifiers = this.modifiersStack[this.modifiersStack.length - 1];
     while (optionalParameters.length) {
       constructorBuffer.append(
-        this.createConstructor(ctx, formalParameters, optionalParameters)
+        this.constructorBuilder.build(
+          modifiers,
+          this.constructorName,
+          formalParameters,
+          optionalParameters
+        )
       );
 
       // We create a constructor per optional parameter, eliminating one
@@ -123,35 +127,5 @@ export default class ConstructorOptionalParams implements VertexParserListener {
     this.constructorName = "";
     this.optionalParameters = [];
     this.formalParameters = [];
-  }
-
-  private createConstructor(
-    ctx: ConstructorDeclarationContext,
-    formalParameters: FormalParameter[],
-    optionalParameters: OptionalParameter[]
-  ): string {
-    const constructorOverload = new StringBuilder()
-      .appendReturn()
-      .appendReturn()
-      .appendTab();
-    this.modifiersStack[this.modifiersStack.length - 1].forEach((modifier) => {
-      constructorOverload.append(`${modifier} `);
-    });
-    constructorOverload.append(this.constructorName + "(");
-    formalParameters.forEach((parameter) => {
-      constructorOverload.append(`${parameter.type}  ${parameter.id},`);
-    });
-    constructorOverload.removeTrailingComma();
-    constructorOverload.append("){ this(");
-    formalParameters.forEach((parameter) => {
-      constructorOverload.append(`${parameter.id},`);
-    });
-    optionalParameters.forEach((optionalParameter) => {
-      const parameterValue = optionalParameter.value ?? "null";
-      constructorOverload.append(`${parameterValue},`);
-    });
-    constructorOverload.removeTrailingComma();
-    constructorOverload.append("); }");
-    return constructorOverload.build();
   }
 }

@@ -28,6 +28,12 @@ export default class StringBuilder {
     return this;
   }
 
+  // TODO: Use this as an easy way to build methods and constructors
+  // addMethod(
+  //   methodName: string,
+  //   params: ["string", "string"][]
+  // ): StringBuilder {}
+
   build(): string {
     return this.buffer;
   }
