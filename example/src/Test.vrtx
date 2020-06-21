@@ -5,6 +5,7 @@ public class Test {
 
   @NamespaceAccessible
   public Test(String arg1, [String arg2 = 'World!', Object arg3, Integer arg4 = 5]) {
+    String message = arg1 ?? arg3 ?? 'Hello ';
     System.debug(`Hello ${arg1}! Message ${arg2} received`);
   }
 

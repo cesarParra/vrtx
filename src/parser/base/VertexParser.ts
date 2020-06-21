@@ -24,6 +24,8 @@ import { VocabularyImpl } from "antlr4ts/VocabularyImpl";
 import * as Utils from "antlr4ts/misc/Utils";
 
 import { VertexParserListener } from "./VertexParserListener";
+import { VertexParserVisitor } from "./VertexParserVisitor";
+
 
 export class VertexParser extends Parser {
 	public static readonly ABSTRACT = 1;
@@ -134,7 +136,7 @@ export class VertexParser extends Parser {
 	public static readonly LSHIFT_ASSIGN = 106;
 	public static readonly RSHIFT_ASSIGN = 107;
 	public static readonly URSHIFT_ASSIGN = 108;
-	public static readonly VERTEX_IFNULL = 109;
+	public static readonly NULL_COALESCE = 109;
 	public static readonly AT = 110;
 	public static readonly DOLLAR = 111;
 	public static readonly Identifier = 112;
@@ -292,7 +294,7 @@ export class VertexParser extends Parser {
 		"OR", "INC", "DEC", "ADD", "SUB", "MUL", "DIV", "BITAND", "BITOR", "CARET", 
 		"MOD", "MAPTO", "TICK", "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN", 
 		"AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "MOD_ASSIGN", "LSHIFT_ASSIGN", 
-		"RSHIFT_ASSIGN", "URSHIFT_ASSIGN", "VERTEX_IFNULL", "AT", "DOLLAR", "Identifier", 
+		"RSHIFT_ASSIGN", "URSHIFT_ASSIGN", "NULL_COALESCE", "AT", "DOLLAR", "Identifier", 
 		"WS", "DOC_COMMENT", "COMMENT", "LINE_COMMENT",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(VertexParser._LITERAL_NAMES, VertexParser._SYMBOLIC_NAMES, []);
@@ -4049,7 +4051,7 @@ export class VertexParser extends Parser {
 				this.state = 815;
 				this.match(VertexParser.RPAREN);
 				this.state = 816;
-				this.expression(17);
+				this.expression(18);
 				}
 				break;
 
@@ -4071,7 +4073,7 @@ export class VertexParser extends Parser {
 					this.consume();
 				}
 				this.state = 819;
-				this.expression(15);
+				this.expression(16);
 				}
 				break;
 
@@ -4093,7 +4095,7 @@ export class VertexParser extends Parser {
 					this.consume();
 				}
 				this.state = 821;
-				this.expression(14);
+				this.expression(15);
 				}
 				break;
 			}
@@ -4116,8 +4118,8 @@ export class VertexParser extends Parser {
 						_localctx = new Arth1ExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 824;
-						if (!(this.precpred(this._ctx, 13))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 13)");
+						if (!(this.precpred(this._ctx, 14))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 14)");
 						}
 						this.state = 825;
 						_la = this._input.LA(1);
@@ -4132,7 +4134,7 @@ export class VertexParser extends Parser {
 							this.consume();
 						}
 						this.state = 826;
-						this.expression(14);
+						this.expression(15);
 						}
 						break;
 
@@ -4141,8 +4143,8 @@ export class VertexParser extends Parser {
 						_localctx = new Arth2ExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 827;
-						if (!(this.precpred(this._ctx, 12))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 12)");
+						if (!(this.precpred(this._ctx, 13))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 13)");
 						}
 						this.state = 828;
 						_la = this._input.LA(1);
@@ -4157,7 +4159,7 @@ export class VertexParser extends Parser {
 							this.consume();
 						}
 						this.state = 829;
-						this.expression(13);
+						this.expression(14);
 						}
 						break;
 
@@ -4166,8 +4168,8 @@ export class VertexParser extends Parser {
 						_localctx = new BitExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 830;
-						if (!(this.precpred(this._ctx, 11))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 11)");
+						if (!(this.precpred(this._ctx, 12))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 12)");
 						}
 						this.state = 838;
 						this._errHandler.sync(this);
@@ -4202,7 +4204,7 @@ export class VertexParser extends Parser {
 							break;
 						}
 						this.state = 840;
-						this.expression(12);
+						this.expression(13);
 						}
 						break;
 
@@ -4211,8 +4213,8 @@ export class VertexParser extends Parser {
 						_localctx = new CmpExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 841;
-						if (!(this.precpred(this._ctx, 10))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 10)");
+						if (!(this.precpred(this._ctx, 11))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 11)");
 						}
 						this.state = 842;
 						_la = this._input.LA(1);
@@ -4237,7 +4239,7 @@ export class VertexParser extends Parser {
 						}
 
 						this.state = 846;
-						this.expression(11);
+						this.expression(12);
 						}
 						break;
 
@@ -4246,8 +4248,8 @@ export class VertexParser extends Parser {
 						_localctx = new EqualityExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 847;
-						if (!(this.precpred(this._ctx, 8))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 8)");
+						if (!(this.precpred(this._ctx, 9))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 9)");
 						}
 						this.state = 848;
 						_la = this._input.LA(1);
@@ -4262,7 +4264,7 @@ export class VertexParser extends Parser {
 							this.consume();
 						}
 						this.state = 849;
-						this.expression(9);
+						this.expression(10);
 						}
 						break;
 
@@ -4271,13 +4273,13 @@ export class VertexParser extends Parser {
 						_localctx = new BitAndExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 850;
-						if (!(this.precpred(this._ctx, 7))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 7)");
+						if (!(this.precpred(this._ctx, 8))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 8)");
 						}
 						this.state = 851;
 						this.match(VertexParser.BITAND);
 						this.state = 852;
-						this.expression(8);
+						this.expression(9);
 						}
 						break;
 
@@ -4286,13 +4288,13 @@ export class VertexParser extends Parser {
 						_localctx = new BitNotExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 853;
-						if (!(this.precpred(this._ctx, 6))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 6)");
+						if (!(this.precpred(this._ctx, 7))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 7)");
 						}
 						this.state = 854;
 						this.match(VertexParser.CARET);
 						this.state = 855;
-						this.expression(7);
+						this.expression(8);
 						}
 						break;
 
@@ -4301,13 +4303,13 @@ export class VertexParser extends Parser {
 						_localctx = new BitOrExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 856;
-						if (!(this.precpred(this._ctx, 5))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 5)");
+						if (!(this.precpred(this._ctx, 6))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 6)");
 						}
 						this.state = 857;
 						this.match(VertexParser.BITOR);
 						this.state = 858;
-						this.expression(6);
+						this.expression(7);
 						}
 						break;
 
@@ -4316,13 +4318,13 @@ export class VertexParser extends Parser {
 						_localctx = new LogAndExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 859;
-						if (!(this.precpred(this._ctx, 4))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 4)");
+						if (!(this.precpred(this._ctx, 5))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 5)");
 						}
 						this.state = 860;
 						this.match(VertexParser.AND);
 						this.state = 861;
-						this.expression(5);
+						this.expression(6);
 						}
 						break;
 
@@ -4331,13 +4333,13 @@ export class VertexParser extends Parser {
 						_localctx = new LogOrExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
 						this.state = 862;
-						if (!(this.precpred(this._ctx, 3))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 3)");
+						if (!(this.precpred(this._ctx, 4))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 4)");
 						}
 						this.state = 863;
 						this.match(VertexParser.OR);
 						this.state = 864;
-						this.expression(4);
+						this.expression(5);
 						}
 						break;
 
@@ -4434,46 +4436,13 @@ export class VertexParser extends Parser {
 
 					case 15:
 						{
-						_localctx = new IfNullExpressionContext(new ExpressionContext(_parentctx, _parentState));
-						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
-						this.state = 885;
-						if (!(this.precpred(this._ctx, 19))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 19)");
-						}
-						this.state = 888;
-						this._errHandler.sync(this);
-						_alt = 1;
-						do {
-							switch (_alt) {
-							case 1:
-								{
-								{
-								this.state = 886;
-								this.match(VertexParser.VERTEX_IFNULL);
-								this.state = 887;
-								this.expression(0);
-								}
-								}
-								break;
-							default:
-								throw new NoViableAltException(this);
-							}
-							this.state = 890;
-							this._errHandler.sync(this);
-							_alt = this.interpreter.adaptivePredict(this._input, 82, this._ctx);
-						} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
-						}
-						break;
-
-					case 16:
-						{
 						_localctx = new PostOpExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
-						this.state = 892;
-						if (!(this.precpred(this._ctx, 16))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 16)");
+						this.state = 885;
+						if (!(this.precpred(this._ctx, 17))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 17)");
 						}
-						this.state = 893;
+						this.state = 886;
 						_la = this._input.LA(1);
 						if (!(_la === VertexParser.INC || _la === VertexParser.DEC)) {
 						this._errHandler.recoverInline(this);
@@ -4488,18 +4457,51 @@ export class VertexParser extends Parser {
 						}
 						break;
 
-					case 17:
+					case 16:
 						{
 						_localctx = new InstanceOfExpressionContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
-						this.state = 894;
-						if (!(this.precpred(this._ctx, 9))) {
-							throw new FailedPredicateException(this, "this.precpred(this._ctx, 9)");
+						this.state = 887;
+						if (!(this.precpred(this._ctx, 10))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 10)");
 						}
-						this.state = 895;
+						this.state = 888;
 						this.match(VertexParser.INSTANCEOF);
-						this.state = 896;
+						this.state = 889;
 						this.typeRef();
+						}
+						break;
+
+					case 17:
+						{
+						_localctx = new NullCoalesceExpressionContext(new ExpressionContext(_parentctx, _parentState));
+						this.pushNewRecursionContext(_localctx, _startState, VertexParser.RULE_expression);
+						this.state = 890;
+						if (!(this.precpred(this._ctx, 3))) {
+							throw new FailedPredicateException(this, "this.precpred(this._ctx, 3)");
+						}
+						this.state = 893;
+						this._errHandler.sync(this);
+						_alt = 1;
+						do {
+							switch (_alt) {
+							case 1:
+								{
+								{
+								this.state = 891;
+								this.match(VertexParser.NULL_COALESCE);
+								this.state = 892;
+								this.expression(0);
+								}
+								}
+								break;
+							default:
+								throw new NoViableAltException(this);
+							}
+							this.state = 895;
+							this._errHandler.sync(this);
+							_alt = this.interpreter.adaptivePredict(this._input, 82, this._ctx);
+						} while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER);
 						}
 						break;
 					}
@@ -5326,34 +5328,34 @@ export class VertexParser extends Parser {
 	private expression_sempred(_localctx: ExpressionContext, predIndex: number): boolean {
 		switch (predIndex) {
 		case 0:
-			return this.precpred(this._ctx, 13);
+			return this.precpred(this._ctx, 14);
 
 		case 1:
-			return this.precpred(this._ctx, 12);
+			return this.precpred(this._ctx, 13);
 
 		case 2:
-			return this.precpred(this._ctx, 11);
+			return this.precpred(this._ctx, 12);
 
 		case 3:
-			return this.precpred(this._ctx, 10);
+			return this.precpred(this._ctx, 11);
 
 		case 4:
-			return this.precpred(this._ctx, 8);
+			return this.precpred(this._ctx, 9);
 
 		case 5:
-			return this.precpred(this._ctx, 7);
+			return this.precpred(this._ctx, 8);
 
 		case 6:
-			return this.precpred(this._ctx, 6);
+			return this.precpred(this._ctx, 7);
 
 		case 7:
-			return this.precpred(this._ctx, 5);
+			return this.precpred(this._ctx, 6);
 
 		case 8:
-			return this.precpred(this._ctx, 4);
+			return this.precpred(this._ctx, 5);
 
 		case 9:
-			return this.precpred(this._ctx, 3);
+			return this.precpred(this._ctx, 4);
 
 		case 10:
 			return this.precpred(this._ctx, 2);
@@ -5368,13 +5370,13 @@ export class VertexParser extends Parser {
 			return this.precpred(this._ctx, 21);
 
 		case 14:
-			return this.precpred(this._ctx, 19);
+			return this.precpred(this._ctx, 17);
 
 		case 15:
-			return this.precpred(this._ctx, 16);
+			return this.precpred(this._ctx, 10);
 
 		case 16:
-			return this.precpred(this._ctx, 9);
+			return this.precpred(this._ctx, 3);
 		}
 		return true;
 	}
@@ -5461,8 +5463,8 @@ export class VertexParser extends Parser {
 		"M\x03M\x03M\x05M\u034F\nM\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03" +
 		"M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03" +
 		"M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x05M\u0371\nM\x03M\x03" +
-		"M\x03M\x03M\x03M\x03M\x03M\x03M\x06M\u037B\nM\rM\x0EM\u037C\x03M\x03M" +
-		"\x03M\x03M\x03M\x07M\u0384\nM\fM\x0EM\u0387\vM\x03N\x03N\x03N\x03N\x03" +
+		"M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x03M\x06M\u0380\n" +
+		"M\rM\x0EM\u0381\x07M\u0384\nM\fM\x0EM\u0387\vM\x03N\x03N\x03N\x03N\x03" +
 		"N\x03N\x03N\x03N\x03N\x03N\x03N\x03N\x03N\x05N\u0396\nN\x03O\x03O\x03" +
 		"O\x05O\u039B\nO\x03O\x03O\x03O\x03O\x03O\x05O\u03A2\nO\x03O\x03O\x03O" +
 		"\x03O\x05O\u03A8\nO\x03O\x05O\u03AB\nO\x03P\x03P\x03P\x05P\u03B0\nP\x03" +
@@ -5793,27 +5795,27 @@ export class VertexParser extends Parser {
 		"\u0329\u0327\x03\x02\x02\x02\u032A\u032B\bM\x01\x02\u032B\u0339\x05\x9A" +
 		"N\x02\u032C\u0339\x05\x9CO\x02\u032D\u032E\x07\x1B\x02\x02\u032E\u0339" +
 		"\x05\xA0Q\x02\u032F\u0330\x07A\x02\x02\u0330\u0331\x05.\x18\x02\u0331" +
-		"\u0332\x07B\x02\x02\u0332\u0333\x05\x98M\x13\u0333\u0339\x03\x02\x02\x02" +
-		"\u0334\u0335\t\x05\x02\x02\u0335\u0339\x05\x98M\x11\u0336\u0337\t\x06" +
-		"\x02\x02\u0337\u0339\x05\x98M\x10\u0338\u032A\x03\x02\x02\x02\u0338\u032C" +
+		"\u0332\x07B\x02\x02\u0332\u0333\x05\x98M\x14\u0333\u0339\x03\x02\x02\x02" +
+		"\u0334\u0335\t\x05\x02\x02\u0335\u0339\x05\x98M\x12\u0336\u0337\t\x06" +
+		"\x02\x02\u0337\u0339\x05\x98M\x11\u0338\u032A\x03\x02\x02\x02\u0338\u032C" +
 		"\x03\x02\x02\x02\u0338\u032D\x03\x02\x02\x02\u0338\u032F\x03\x02\x02\x02" +
 		"\u0338\u0334\x03\x02\x02\x02\u0338\u0336\x03\x02\x02\x02\u0339\u0385\x03" +
-		"\x02\x02\x02\u033A\u033B\f\x0F\x02\x02\u033B\u033C\t\x07\x02\x02\u033C" +
-		"\u0384\x05\x98M\x10\u033D\u033E\f\x0E\x02\x02\u033E\u033F\t\b\x02\x02" +
-		"\u033F\u0384\x05\x98M\x0F\u0340\u0348\f\r\x02\x02\u0341\u0342\x07L\x02" +
+		"\x02\x02\x02\u033A\u033B\f\x10\x02\x02\u033B\u033C\t\x07\x02\x02\u033C" +
+		"\u0384\x05\x98M\x11\u033D\u033E\f\x0F\x02\x02\u033E\u033F\t\b\x02\x02" +
+		"\u033F\u0384\x05\x98M\x10\u0340\u0348\f\x0E\x02\x02\u0341\u0342\x07L\x02" +
 		"\x02\u0342\u0349\x07L\x02\x02\u0343\u0344\x07K\x02\x02\u0344\u0345\x07" +
 		"K\x02\x02\u0345\u0349\x07K\x02\x02\u0346\u0347\x07K\x02\x02\u0347\u0349" +
 		"\x07K\x02\x02\u0348\u0341\x03\x02\x02\x02\u0348\u0343\x03\x02\x02\x02" +
 		"\u0348\u0346\x03\x02\x02\x02\u0349\u034A\x03\x02\x02\x02\u034A\u0384\x05" +
-		"\x98M\x0E\u034B\u034C\f\f\x02\x02\u034C\u034E\t\t\x02\x02\u034D\u034F" +
+		"\x98M\x0F\u034B\u034C\f\r\x02\x02\u034C\u034E\t\t\x02\x02\u034D\u034F" +
 		"\x07J\x02\x02\u034E\u034D\x03\x02\x02\x02\u034E\u034F\x03\x02\x02\x02" +
-		"\u034F\u0350\x03\x02\x02\x02\u0350\u0384\x05\x98M\r\u0351\u0352\f\n\x02" +
-		"\x02\u0352\u0353\t\n\x02\x02\u0353\u0384\x05\x98M\v\u0354\u0355\f\t\x02" +
-		"\x02\u0355\u0356\x07^\x02\x02\u0356\u0384\x05\x98M\n\u0357\u0358\f\b\x02" +
-		"\x02\u0358\u0359\x07`\x02\x02\u0359\u0384\x05\x98M\t\u035A\u035B\f\x07" +
-		"\x02\x02\u035B\u035C\x07_\x02\x02\u035C\u0384\x05\x98M\b\u035D\u035E\f" +
-		"\x06\x02\x02\u035E\u035F\x07V\x02\x02\u035F\u0384\x05\x98M\x07\u0360\u0361" +
-		"\f\x05\x02\x02\u0361\u0362\x07W\x02\x02\u0362\u0384\x05\x98M\x06\u0363" +
+		"\u034F\u0350\x03\x02\x02\x02\u0350\u0384\x05\x98M\x0E\u0351\u0352\f\v" +
+		"\x02\x02\u0352\u0353\t\n\x02\x02\u0353\u0384\x05\x98M\f\u0354\u0355\f" +
+		"\n\x02\x02\u0355\u0356\x07^\x02\x02\u0356\u0384\x05\x98M\v\u0357\u0358" +
+		"\f\t\x02\x02\u0358\u0359\x07`\x02\x02\u0359\u0384\x05\x98M\n\u035A\u035B" +
+		"\f\b\x02\x02\u035B\u035C\x07_\x02\x02\u035C\u0384\x05\x98M\t\u035D\u035E" +
+		"\f\x07\x02\x02\u035E\u035F\x07V\x02\x02\u035F\u0384\x05\x98M\b\u0360\u0361" +
+		"\f\x06\x02\x02\u0361\u0362\x07W\x02\x02\u0362\u0384\x05\x98M\x07\u0363" +
 		"\u0364\f\x04\x02\x02\u0364\u0365\x07O\x02\x02\u0365\u0366\x05\x98M\x02" +
 		"\u0366\u0367\x07P\x02\x02\u0367\u0368\x05\x98M\x04\u0368\u0384\x03\x02" +
 		"\x02\x02\u0369\u036A\f\x03\x02\x02\u036A\u036B\t\v\x02\x02\u036B\u0384" +
@@ -5821,18 +5823,18 @@ export class VertexParser extends Parser {
 		"\u0371\x05\x9EP\x02\u036F\u0371\x05\xB8]\x02\u0370\u036E\x03\x02\x02\x02" +
 		"\u0370\u036F\x03\x02\x02\x02\u0371\u0384\x03\x02\x02\x02\u0372\u0373\f" +
 		"\x17\x02\x02\u0373\u0374\x07E\x02\x02\u0374\u0375\x05\x98M\x02\u0375\u0376" +
-		"\x07F\x02\x02\u0376\u0384\x03\x02\x02\x02\u0377\u037A\f\x15\x02\x02\u0378" +
-		"\u0379\x07o\x02\x02\u0379\u037B\x05\x98M\x02\u037A\u0378\x03\x02\x02\x02" +
-		"\u037B\u037C\x03\x02\x02\x02\u037C\u037A\x03\x02\x02\x02\u037C\u037D\x03" +
-		"\x02\x02\x02\u037D\u0384\x03\x02\x02\x02\u037E\u037F\f\x12\x02\x02\u037F" +
-		"\u0384\t\f\x02\x02\u0380\u0381\f\v\x02\x02\u0381\u0382\x07\x18\x02\x02" +
-		"\u0382\u0384\x05.\x18\x02\u0383\u033A\x03\x02\x02\x02\u0383\u033D\x03" +
+		"\x07F\x02\x02\u0376\u0384\x03\x02\x02\x02\u0377\u0378\f\x13\x02\x02\u0378" +
+		"\u0384\t\f\x02\x02\u0379\u037A\f\f\x02\x02\u037A\u037B\x07\x18\x02\x02" +
+		"\u037B\u0384\x05.\x18\x02\u037C\u037F\f\x05\x02\x02\u037D\u037E\x07o\x02" +
+		"\x02\u037E\u0380\x05\x98M\x02\u037F\u037D\x03\x02\x02\x02\u0380\u0381" +
+		"\x03\x02\x02\x02\u0381\u037F\x03\x02\x02\x02\u0381\u0382\x03\x02\x02\x02" +
+		"\u0382\u0384\x03\x02\x02\x02\u0383\u033A\x03\x02\x02\x02\u0383\u033D\x03" +
 		"\x02\x02\x02\u0383\u0340\x03\x02\x02\x02\u0383\u034B\x03\x02\x02\x02\u0383" +
 		"\u0351\x03\x02\x02\x02\u0383\u0354\x03\x02\x02\x02\u0383\u0357\x03\x02" +
 		"\x02\x02\u0383\u035A\x03\x02\x02\x02\u0383\u035D\x03\x02\x02\x02\u0383" +
 		"\u0360\x03\x02\x02\x02\u0383\u0363\x03\x02\x02\x02\u0383\u0369\x03\x02" +
 		"\x02\x02\u0383\u036C\x03\x02\x02\x02\u0383\u0372\x03\x02\x02\x02\u0383" +
-		"\u0377\x03\x02\x02\x02\u0383\u037E\x03\x02\x02\x02\u0383\u0380\x03\x02" +
+		"\u0377\x03\x02\x02\x02\u0383\u0379\x03\x02\x02\x02\u0383\u037C\x03\x02" +
 		"\x02\x02\u0384\u0387\x03\x02\x02\x02\u0385\u0383\x03\x02\x02\x02\u0385" +
 		"\u0386\x03\x02\x02\x02\u0386\x99\x03\x02\x02\x02\u0387\u0385\x03\x02\x02" +
 		"\x02\u0388\u0389\x07A\x02\x02\u0389\u038A\x05\x98M\x02\u038A\u038B\x07" +
@@ -5898,7 +5900,7 @@ export class VertexParser extends Parser {
 		"\u01E2\u01E8\u01F4\u01FC\u0203\u020D\u0210\u0214\u0219\u0223\u022B\u022E" +
 		"\u0231\u0239\u0244\u025E\u0265\u026E\u027C\u0282\u0285\u028B\u02A2\u02A5" +
 		"\u02A8\u02AC\u02CD\u02D9\u02E4\u02E9\u02EE\u02F3\u02FA\u0307\u030B\u030F" +
-		"\u0311\u0315\u0327\u0338\u0348\u034E\u0370\u037C\u0383\u0385\u0395\u039A" +
+		"\u0311\u0315\u0327\u0338\u0348\u034E\u0370\u0381\u0383\u0385\u0395\u039A" +
 		"\u03A1\u03A7\u03AA\u03AF\u03B9\u03C0\u03C8\u03D6\u03D8\u03E0\u03EF\u03F6" +
 		"\u03FD\u03FF";
 	public static readonly _serializedATN: string = Utils.join(
@@ -5972,6 +5974,14 @@ export class TriggerUnitContext extends ParserRuleContext {
 			listener.exitTriggerUnit(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTriggerUnit) {
+			return visitor.visitTriggerUnit(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -5999,6 +6009,14 @@ export class TriggerCaseContext extends ParserRuleContext {
 			listener.exitTriggerCase(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTriggerCase) {
+			return visitor.visitTriggerCase(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6022,6 +6040,14 @@ export class CompilationUnitContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitCompilationUnit) {
 			listener.exitCompilationUnit(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitCompilationUnit) {
+			return visitor.visitCompilationUnit(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6063,6 +6089,14 @@ export class TypeDeclarationContext extends ParserRuleContext {
 			listener.exitTypeDeclaration(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTypeDeclaration) {
+			return visitor.visitTypeDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6099,6 +6133,14 @@ export class ClassDeclarationContext extends ParserRuleContext {
 			listener.exitClassDeclaration(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitClassDeclaration) {
+			return visitor.visitClassDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6127,6 +6169,14 @@ export class EnumDeclarationContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitEnumDeclaration) {
 			listener.exitEnumDeclaration(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitEnumDeclaration) {
+			return visitor.visitEnumDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6168,6 +6218,14 @@ export class EnumConstantsContext extends ParserRuleContext {
 			listener.exitEnumConstants(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitEnumConstants) {
+			return visitor.visitEnumConstants(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6198,6 +6256,14 @@ export class InterfaceDeclarationContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitInterfaceDeclaration) {
 			listener.exitInterfaceDeclaration(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitInterfaceDeclaration) {
+			return visitor.visitInterfaceDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6239,6 +6305,14 @@ export class TypeListContext extends ParserRuleContext {
 			listener.exitTypeList(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTypeList) {
+			return visitor.visitTypeList(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6271,6 +6345,14 @@ export class ClassBodyContext extends ParserRuleContext {
 			listener.exitClassBody(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitClassBody) {
+			return visitor.visitClassBody(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6301,6 +6383,14 @@ export class InterfaceBodyContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitInterfaceBody) {
 			listener.exitInterfaceBody(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitInterfaceBody) {
+			return visitor.visitInterfaceBody(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6341,6 +6431,14 @@ export class ClassBodyDeclarationContext extends ParserRuleContext {
 			listener.exitClassBodyDeclaration(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitClassBodyDeclaration) {
+			return visitor.visitClassBodyDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6379,6 +6477,14 @@ export class ModifierContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitModifier) {
 			listener.exitModifier(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitModifier) {
+			return visitor.visitModifier(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6423,6 +6529,14 @@ export class MemberDeclarationContext extends ParserRuleContext {
 			listener.exitMemberDeclaration(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitMemberDeclaration) {
+			return visitor.visitMemberDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6458,6 +6572,14 @@ export class MethodDeclarationContext extends ParserRuleContext {
 			listener.exitMethodDeclaration(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitMethodDeclaration) {
+			return visitor.visitMethodDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6491,6 +6613,14 @@ export class ConstructorDeclarationContext extends ParserRuleContext {
 			listener.exitConstructorDeclaration(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitConstructorDeclaration) {
+			return visitor.visitConstructorDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6517,6 +6647,14 @@ export class FieldDeclarationContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitFieldDeclaration) {
 			listener.exitFieldDeclaration(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitFieldDeclaration) {
+			return visitor.visitFieldDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6555,6 +6693,14 @@ export class PropertyDeclarationContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitPropertyDeclaration) {
 			listener.exitPropertyDeclaration(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitPropertyDeclaration) {
+			return visitor.visitPropertyDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6598,6 +6744,14 @@ export class InterfaceMethodDeclarationContext extends ParserRuleContext {
 			listener.exitInterfaceMethodDeclaration(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitInterfaceMethodDeclaration) {
+			return visitor.visitInterfaceMethodDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6637,6 +6791,14 @@ export class VariableDeclaratorsContext extends ParserRuleContext {
 			listener.exitVariableDeclarators(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitVariableDeclarators) {
+			return visitor.visitVariableDeclarators(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6663,6 +6825,14 @@ export class VariableDeclaratorContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitVariableDeclarator) {
 			listener.exitVariableDeclarator(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitVariableDeclarator) {
+			return visitor.visitVariableDeclarator(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6704,6 +6874,14 @@ export class ArrayInitializerContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitArrayInitializer) {
 			listener.exitArrayInitializer(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitArrayInitializer) {
+			return visitor.visitArrayInitializer(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6748,6 +6926,14 @@ export class TypeRefContext extends ParserRuleContext {
 			listener.exitTypeRef(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTypeRef) {
+			return visitor.visitTypeRef(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6787,6 +6973,14 @@ export class ArraySubscriptsContext extends ParserRuleContext {
 			listener.exitArraySubscripts(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitArraySubscripts) {
+			return visitor.visitArraySubscripts(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6817,6 +7011,14 @@ export class TypeNameContext extends ParserRuleContext {
 			listener.exitTypeName(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTypeName) {
+			return visitor.visitTypeName(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -6841,6 +7043,14 @@ export class TypeArgumentsContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitTypeArguments) {
 			listener.exitTypeArguments(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTypeArguments) {
+			return visitor.visitTypeArguments(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6875,6 +7085,14 @@ export class FormalParametersEmptyContext extends FormalParametersContext {
 			listener.exitFormalParametersEmpty(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitFormalParametersEmpty) {
+			return visitor.visitFormalParametersEmpty(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class FormalParametersPositionalContext extends FormalParametersContext {
 	public LPAREN(): TerminalNode { return this.getToken(VertexParser.LPAREN, 0); }
@@ -6896,6 +7114,14 @@ export class FormalParametersPositionalContext extends FormalParametersContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitFormalParametersPositional) {
 			listener.exitFormalParametersPositional(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitFormalParametersPositional) {
+			return visitor.visitFormalParametersPositional(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6937,6 +7163,14 @@ export class FormalParametersPositionalWithOptionalContext extends FormalParamet
 			listener.exitFormalParametersPositionalWithOptional(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitFormalParametersPositionalWithOptional) {
+			return visitor.visitFormalParametersPositionalWithOptional(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class FormalParametersOptionalContext extends FormalParametersWithOptionalContext {
 	public LPAREN(): TerminalNode { return this.getToken(VertexParser.LPAREN, 0); }
@@ -6958,6 +7192,14 @@ export class FormalParametersOptionalContext extends FormalParametersWithOptiona
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitFormalParametersOptional) {
 			listener.exitFormalParametersOptional(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitFormalParametersOptional) {
+			return visitor.visitFormalParametersOptional(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -6999,6 +7241,14 @@ export class FormalParameterListContext extends ParserRuleContext {
 			listener.exitFormalParameterList(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitFormalParameterList) {
+			return visitor.visitFormalParameterList(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7033,6 +7283,14 @@ export class FormalParameterContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitFormalParameter) {
 			listener.exitFormalParameter(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitFormalParameter) {
+			return visitor.visitFormalParameter(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7076,6 +7334,14 @@ export class OptionalPositionalFormalParametersContext extends ParserRuleContext
 			listener.exitOptionalPositionalFormalParameters(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitOptionalPositionalFormalParameters) {
+			return visitor.visitOptionalPositionalFormalParameters(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7102,6 +7368,14 @@ export class DefaultFormalParameterContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitDefaultFormalParameter) {
 			listener.exitDefaultFormalParameter(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitDefaultFormalParameter) {
+			return visitor.visitDefaultFormalParameter(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7143,6 +7417,14 @@ export class QualifiedNameContext extends ParserRuleContext {
 			listener.exitQualifiedName(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitQualifiedName) {
+			return visitor.visitQualifiedName(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7168,6 +7450,14 @@ export class LiteralContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitLiteral) {
 			listener.exitLiteral(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitLiteral) {
+			return visitor.visitLiteral(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7201,6 +7491,14 @@ export class AnnotationContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitAnnotation) {
 			listener.exitAnnotation(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitAnnotation) {
+			return visitor.visitAnnotation(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7242,6 +7540,14 @@ export class ElementValuePairsContext extends ParserRuleContext {
 			listener.exitElementValuePairs(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitElementValuePairs) {
+			return visitor.visitElementValuePairs(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7268,6 +7574,14 @@ export class ElementValuePairContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitElementValuePair) {
 			listener.exitElementValuePair(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitElementValuePair) {
+			return visitor.visitElementValuePair(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7298,6 +7612,14 @@ export class ElementValueContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitElementValue) {
 			listener.exitElementValue(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitElementValue) {
+			return visitor.visitElementValue(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7341,6 +7663,14 @@ export class ElementValueArrayInitializerContext extends ParserRuleContext {
 			listener.exitElementValueArrayInitializer(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitElementValueArrayInitializer) {
+			return visitor.visitElementValueArrayInitializer(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7373,6 +7703,14 @@ export class BlockContext extends ParserRuleContext {
 			listener.exitBlock(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitBlock) {
+			return visitor.visitBlock(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7396,6 +7734,14 @@ export class LocalVariableDeclarationStatementContext extends ParserRuleContext 
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitLocalVariableDeclarationStatement) {
 			listener.exitLocalVariableDeclarationStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitLocalVariableDeclarationStatement) {
+			return visitor.visitLocalVariableDeclarationStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7432,6 +7778,14 @@ export class LocalVariableDeclarationContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitLocalVariableDeclaration) {
 			listener.exitLocalVariableDeclaration(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitLocalVariableDeclaration) {
+			return visitor.visitLocalVariableDeclaration(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7515,6 +7869,14 @@ export class StatementContext extends ParserRuleContext {
 			listener.exitStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitStatement) {
+			return visitor.visitStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7548,6 +7910,14 @@ export class IfStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitIfStatement) {
 			listener.exitIfStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitIfStatement) {
+			return visitor.visitIfStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7587,6 +7957,14 @@ export class SwitchStatementContext extends ParserRuleContext {
 			listener.exitSwitchStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitSwitchStatement) {
+			return visitor.visitSwitchStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7613,6 +7991,14 @@ export class WhenControlContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitWhenControl) {
 			listener.exitWhenControl(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitWhenControl) {
+			return visitor.visitWhenControl(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7664,6 +8050,14 @@ export class WhenValueContext extends ParserRuleContext {
 			listener.exitWhenValue(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitWhenValue) {
+			return visitor.visitWhenValue(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7690,6 +8084,14 @@ export class WhenLiteralContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitWhenLiteral) {
 			listener.exitWhenLiteral(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitWhenLiteral) {
+			return visitor.visitWhenLiteral(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7722,6 +8124,14 @@ export class ForStatementContext extends ParserRuleContext {
 			listener.exitForStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitForStatement) {
+			return visitor.visitForStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7748,6 +8158,14 @@ export class WhileStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitWhileStatement) {
 			listener.exitWhileStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitWhileStatement) {
+			return visitor.visitWhileStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7778,6 +8196,14 @@ export class DoWhileStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitDoWhileStatement) {
 			listener.exitDoWhileStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitDoWhileStatement) {
+			return visitor.visitDoWhileStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7817,6 +8243,14 @@ export class TryStatementContext extends ParserRuleContext {
 			listener.exitTryStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTryStatement) {
+			return visitor.visitTryStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7841,6 +8275,14 @@ export class ReturnStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitReturnStatement) {
 			listener.exitReturnStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitReturnStatement) {
+			return visitor.visitReturnStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7869,6 +8311,14 @@ export class ThrowStatementContext extends ParserRuleContext {
 			listener.exitThrowStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitThrowStatement) {
+			return visitor.visitThrowStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7892,6 +8342,14 @@ export class BreakStatementContext extends ParserRuleContext {
 			listener.exitBreakStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitBreakStatement) {
+			return visitor.visitBreakStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7913,6 +8371,14 @@ export class ContinueStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitContinueStatement) {
 			listener.exitContinueStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitContinueStatement) {
+			return visitor.visitContinueStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7941,6 +8407,14 @@ export class InsertStatementContext extends ParserRuleContext {
 			listener.exitInsertStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitInsertStatement) {
+			return visitor.visitInsertStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -7965,6 +8439,14 @@ export class UpdateStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitUpdateStatement) {
 			listener.exitUpdateStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitUpdateStatement) {
+			return visitor.visitUpdateStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -7993,6 +8475,14 @@ export class DeleteStatementContext extends ParserRuleContext {
 			listener.exitDeleteStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitDeleteStatement) {
+			return visitor.visitDeleteStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8017,6 +8507,14 @@ export class UndeleteStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitUndeleteStatement) {
 			listener.exitUndeleteStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitUndeleteStatement) {
+			return visitor.visitUndeleteStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8046,6 +8544,14 @@ export class UpsertStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitUpsertStatement) {
 			listener.exitUpsertStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitUpsertStatement) {
+			return visitor.visitUpsertStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8080,6 +8586,14 @@ export class MergeStatementContext extends ParserRuleContext {
 			listener.exitMergeStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitMergeStatement) {
+			return visitor.visitMergeStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8110,6 +8624,14 @@ export class RunAsStatementContext extends ParserRuleContext {
 			listener.exitRunAsStatement(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitRunAsStatement) {
+			return visitor.visitRunAsStatement(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8133,6 +8655,14 @@ export class ExpressionStatementContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitExpressionStatement) {
 			listener.exitExpressionStatement(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitExpressionStatement) {
+			return visitor.visitExpressionStatement(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8171,6 +8701,14 @@ export class PropertyBlockContext extends ParserRuleContext {
 			listener.exitPropertyBlock(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitPropertyBlock) {
+			return visitor.visitPropertyBlock(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8197,6 +8735,14 @@ export class GetterContext extends ParserRuleContext {
 			listener.exitGetter(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitGetter) {
+			return visitor.visitGetter(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8221,6 +8767,14 @@ export class SetterContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitSetter) {
 			listener.exitSetter(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitSetter) {
+			return visitor.visitSetter(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8265,6 +8819,14 @@ export class CatchClauseContext extends ParserRuleContext {
 			listener.exitCatchClause(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitCatchClause) {
+			return visitor.visitCatchClause(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8288,6 +8850,14 @@ export class FinallyBlockContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitFinallyBlock) {
 			listener.exitFinallyBlock(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitFinallyBlock) {
+			return visitor.visitFinallyBlock(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8332,6 +8902,14 @@ export class ForControlContext extends ParserRuleContext {
 			listener.exitForControl(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitForControl) {
+			return visitor.visitForControl(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8357,6 +8935,14 @@ export class ForInitContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitForInit) {
 			listener.exitForInit(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitForInit) {
+			return visitor.visitForInit(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8390,6 +8976,14 @@ export class EnhancedForControlContext extends ParserRuleContext {
 			listener.exitEnhancedForControl(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitEnhancedForControl) {
+			return visitor.visitEnhancedForControl(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8412,6 +9006,14 @@ export class ForUpdateContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitForUpdate) {
 			listener.exitForUpdate(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitForUpdate) {
+			return visitor.visitForUpdate(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8438,6 +9040,14 @@ export class ParExpressionContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitParExpression) {
 			listener.exitParExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitParExpression) {
+			return visitor.visitParExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8479,6 +9089,14 @@ export class ExpressionListContext extends ParserRuleContext {
 			listener.exitExpressionList(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitExpressionList) {
+			return visitor.visitExpressionList(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -8512,6 +9130,14 @@ export class PrimaryExpressionContext extends ExpressionContext {
 			listener.exitPrimaryExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitPrimaryExpression) {
+			return visitor.visitPrimaryExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class DotExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext {
@@ -8538,6 +9164,14 @@ export class DotExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitDotExpression) {
 			listener.exitDotExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitDotExpression) {
+			return visitor.visitDotExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8569,6 +9203,14 @@ export class ArrayExpressionContext extends ExpressionContext {
 			listener.exitArrayExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitArrayExpression) {
+			return visitor.visitArrayExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class MethodCallExpressionContext extends ExpressionContext {
 	public methodCall(): MethodCallContext {
@@ -8590,40 +9232,12 @@ export class MethodCallExpressionContext extends ExpressionContext {
 			listener.exitMethodCallExpression(this);
 		}
 	}
-}
-export class IfNullExpressionContext extends ExpressionContext {
-	public expression(): ExpressionContext[];
-	public expression(i: number): ExpressionContext;
-	public expression(i?: number): ExpressionContext | ExpressionContext[] {
-		if (i === undefined) {
-			return this.getRuleContexts(ExpressionContext);
-		} else {
-			return this.getRuleContext(i, ExpressionContext);
-		}
-	}
-	public VERTEX_IFNULL(): TerminalNode[];
-	public VERTEX_IFNULL(i: number): TerminalNode;
-	public VERTEX_IFNULL(i?: number): TerminalNode | TerminalNode[] {
-		if (i === undefined) {
-			return this.getTokens(VertexParser.VERTEX_IFNULL);
-		} else {
-			return this.getToken(VertexParser.VERTEX_IFNULL, i);
-		}
-	}
-	constructor(ctx: ExpressionContext) {
-		super(ctx.parent, ctx.invokingState);
-		this.copyFrom(ctx);
-	}
 	// @Override
-	public enterRule(listener: VertexParserListener): void {
-		if (listener.enterIfNullExpression) {
-			listener.enterIfNullExpression(this);
-		}
-	}
-	// @Override
-	public exitRule(listener: VertexParserListener): void {
-		if (listener.exitIfNullExpression) {
-			listener.exitIfNullExpression(this);
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitMethodCallExpression) {
+			return visitor.visitMethodCallExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8646,6 +9260,14 @@ export class NewExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitNewExpression) {
 			listener.exitNewExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitNewExpression) {
+			return visitor.visitNewExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8674,6 +9296,14 @@ export class CastExpressionContext extends ExpressionContext {
 			listener.exitCastExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitCastExpression) {
+			return visitor.visitCastExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class PostOpExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext {
@@ -8695,6 +9325,14 @@ export class PostOpExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitPostOpExpression) {
 			listener.exitPostOpExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitPostOpExpression) {
+			return visitor.visitPostOpExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8722,6 +9360,14 @@ export class PreOpExpressionContext extends ExpressionContext {
 			listener.exitPreOpExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitPreOpExpression) {
+			return visitor.visitPreOpExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class NegExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext {
@@ -8743,6 +9389,14 @@ export class NegExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitNegExpression) {
 			listener.exitNegExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitNegExpression) {
+			return visitor.visitNegExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8775,6 +9429,14 @@ export class Arth1ExpressionContext extends ExpressionContext {
 			listener.exitArth1Expression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitArth1Expression) {
+			return visitor.visitArth1Expression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class Arth2ExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext[];
@@ -8802,6 +9464,14 @@ export class Arth2ExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitArth2Expression) {
 			listener.exitArth2Expression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitArth2Expression) {
+			return visitor.visitArth2Expression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8849,6 +9519,14 @@ export class BitExpressionContext extends ExpressionContext {
 			listener.exitBitExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitBitExpression) {
+			return visitor.visitBitExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class CmpExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext[];
@@ -8879,6 +9557,14 @@ export class CmpExpressionContext extends ExpressionContext {
 			listener.exitCmpExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitCmpExpression) {
+			return visitor.visitCmpExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class InstanceOfExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext {
@@ -8902,6 +9588,14 @@ export class InstanceOfExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitInstanceOfExpression) {
 			listener.exitInstanceOfExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitInstanceOfExpression) {
+			return visitor.visitInstanceOfExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8936,6 +9630,14 @@ export class EqualityExpressionContext extends ExpressionContext {
 			listener.exitEqualityExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitEqualityExpression) {
+			return visitor.visitEqualityExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class BitAndExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext[];
@@ -8962,6 +9664,14 @@ export class BitAndExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitBitAndExpression) {
 			listener.exitBitAndExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitBitAndExpression) {
+			return visitor.visitBitAndExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -8992,6 +9702,14 @@ export class BitNotExpressionContext extends ExpressionContext {
 			listener.exitBitNotExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitBitNotExpression) {
+			return visitor.visitBitNotExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class BitOrExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext[];
@@ -9018,6 +9736,14 @@ export class BitOrExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitBitOrExpression) {
 			listener.exitBitOrExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitBitOrExpression) {
+			return visitor.visitBitOrExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9048,6 +9774,14 @@ export class LogAndExpressionContext extends ExpressionContext {
 			listener.exitLogAndExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitLogAndExpression) {
+			return visitor.visitLogAndExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class LogOrExpressionContext extends ExpressionContext {
 	public expression(): ExpressionContext[];
@@ -9074,6 +9808,58 @@ export class LogOrExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitLogOrExpression) {
 			listener.exitLogOrExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitLogOrExpression) {
+			return visitor.visitLogOrExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+export class NullCoalesceExpressionContext extends ExpressionContext {
+	public expression(): ExpressionContext[];
+	public expression(i: number): ExpressionContext;
+	public expression(i?: number): ExpressionContext | ExpressionContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(ExpressionContext);
+		} else {
+			return this.getRuleContext(i, ExpressionContext);
+		}
+	}
+	public NULL_COALESCE(): TerminalNode[];
+	public NULL_COALESCE(i: number): TerminalNode;
+	public NULL_COALESCE(i?: number): TerminalNode | TerminalNode[] {
+		if (i === undefined) {
+			return this.getTokens(VertexParser.NULL_COALESCE);
+		} else {
+			return this.getToken(VertexParser.NULL_COALESCE, i);
+		}
+	}
+	constructor(ctx: ExpressionContext) {
+		super(ctx.parent, ctx.invokingState);
+		this.copyFrom(ctx);
+	}
+	// @Override
+	public enterRule(listener: VertexParserListener): void {
+		if (listener.enterNullCoalesceExpression) {
+			listener.enterNullCoalesceExpression(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: VertexParserListener): void {
+		if (listener.exitNullCoalesceExpression) {
+			listener.exitNullCoalesceExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitNullCoalesceExpression) {
+			return visitor.visitNullCoalesceExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9103,6 +9889,14 @@ export class CondExpressionContext extends ExpressionContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitCondExpression) {
 			listener.exitCondExpression(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitCondExpression) {
+			return visitor.visitCondExpression(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9144,6 +9938,14 @@ export class AssignExpressionContext extends ExpressionContext {
 			listener.exitAssignExpression(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitAssignExpression) {
+			return visitor.visitAssignExpression(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -9179,6 +9981,14 @@ export class SubPrimaryContext extends PrimaryContext {
 			listener.exitSubPrimary(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitSubPrimary) {
+			return visitor.visitSubPrimary(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class ThisPrimaryContext extends PrimaryContext {
 	public THIS(): TerminalNode { return this.getToken(VertexParser.THIS, 0); }
@@ -9196,6 +10006,14 @@ export class ThisPrimaryContext extends PrimaryContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitThisPrimary) {
 			listener.exitThisPrimary(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitThisPrimary) {
+			return visitor.visitThisPrimary(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9217,6 +10035,14 @@ export class SuperPrimaryContext extends PrimaryContext {
 			listener.exitSuperPrimary(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitSuperPrimary) {
+			return visitor.visitSuperPrimary(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class LiteralPrimaryContext extends PrimaryContext {
 	public literal(): LiteralContext {
@@ -9236,6 +10062,14 @@ export class LiteralPrimaryContext extends PrimaryContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitLiteralPrimary) {
 			listener.exitLiteralPrimary(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitLiteralPrimary) {
+			return visitor.visitLiteralPrimary(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9261,6 +10095,14 @@ export class TypeRefPrimaryContext extends PrimaryContext {
 			listener.exitTypeRefPrimary(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitTypeRefPrimary) {
+			return visitor.visitTypeRefPrimary(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class IdPrimaryContext extends PrimaryContext {
 	public id(): IdContext {
@@ -9282,6 +10124,14 @@ export class IdPrimaryContext extends PrimaryContext {
 			listener.exitIdPrimary(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitIdPrimary) {
+			return visitor.visitIdPrimary(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 export class SoqlPrimaryContext extends PrimaryContext {
 	public soqlLiteral(): SoqlLiteralContext {
@@ -9301,6 +10151,14 @@ export class SoqlPrimaryContext extends PrimaryContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitSoqlPrimary) {
 			listener.exitSoqlPrimary(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitSoqlPrimary) {
+			return visitor.visitSoqlPrimary(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9334,6 +10192,14 @@ export class MethodCallContext extends ParserRuleContext {
 			listener.exitMethodCall(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitMethodCall) {
+			return visitor.visitMethodCall(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -9361,6 +10227,14 @@ export class DotMethodCallContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitDotMethodCall) {
 			listener.exitDotMethodCall(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitDotMethodCall) {
+			return visitor.visitDotMethodCall(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9402,6 +10276,14 @@ export class CreatorContext extends ParserRuleContext {
 			listener.exitCreator(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitCreator) {
+			return visitor.visitCreator(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -9441,6 +10323,14 @@ export class CreatedNameContext extends ParserRuleContext {
 			listener.exitCreatedName(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitCreatedName) {
+			return visitor.visitCreatedName(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -9470,6 +10360,14 @@ export class IdCreatedNamePairContext extends ParserRuleContext {
 			listener.exitIdCreatedNamePair(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitIdCreatedNamePair) {
+			return visitor.visitIdCreatedNamePair(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -9491,6 +10389,14 @@ export class NoRestContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitNoRest) {
 			listener.exitNoRest(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitNoRest) {
+			return visitor.visitNoRest(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9515,6 +10421,14 @@ export class ClassCreatorRestContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitClassCreatorRest) {
 			listener.exitClassCreatorRest(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitClassCreatorRest) {
+			return visitor.visitClassCreatorRest(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9544,6 +10458,14 @@ export class ArrayCreatorRestContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitArrayCreatorRest) {
 			listener.exitArrayCreatorRest(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitArrayCreatorRest) {
+			return visitor.visitArrayCreatorRest(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9587,6 +10509,14 @@ export class MapCreatorRestContext extends ParserRuleContext {
 			listener.exitMapCreatorRest(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitMapCreatorRest) {
+			return visitor.visitMapCreatorRest(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -9616,6 +10546,14 @@ export class MapCreatorRestPairContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitMapCreatorRestPair) {
 			listener.exitMapCreatorRestPair(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitMapCreatorRestPair) {
+			return visitor.visitMapCreatorRestPair(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9659,6 +10597,14 @@ export class SetCreatorRestContext extends ParserRuleContext {
 			listener.exitSetCreatorRest(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitSetCreatorRest) {
+			return visitor.visitSetCreatorRest(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -9683,6 +10629,14 @@ export class ArgumentsContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitArguments) {
 			listener.exitArguments(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitArguments) {
+			return visitor.visitArguments(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9725,6 +10679,14 @@ export class SoqlLiteralContext extends ParserRuleContext {
 			listener.exitSoqlLiteral(this);
 		}
 	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitSoqlLiteral) {
+			return visitor.visitSoqlLiteral(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
 }
 
 
@@ -9758,6 +10720,14 @@ export class IdContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitId) {
 			listener.exitId(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitId) {
+			return visitor.visitId(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }
@@ -9834,6 +10804,14 @@ export class AnyIdContext extends ParserRuleContext {
 	public exitRule(listener: VertexParserListener): void {
 		if (listener.exitAnyId) {
 			listener.exitAnyId(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: VertexParserVisitor<Result>): Result {
+		if (visitor.visitAnyId) {
+			return visitor.visitAnyId(this);
+		} else {
+			return visitor.visitChildren(this);
 		}
 	}
 }

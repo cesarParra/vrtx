@@ -124,7 +124,7 @@ export class VertexLexer extends Lexer {
 	public static readonly LSHIFT_ASSIGN = 106;
 	public static readonly RSHIFT_ASSIGN = 107;
 	public static readonly URSHIFT_ASSIGN = 108;
-	public static readonly VERTEX_IFNULL = 109;
+	public static readonly NULL_COALESCE = 109;
 	public static readonly AT = 110;
 	public static readonly DOLLAR = 111;
 	public static readonly Identifier = 112;
@@ -162,7 +162,7 @@ export class VertexLexer extends Lexer {
 		"OR", "INC", "DEC", "ADD", "SUB", "MUL", "DIV", "BITAND", "BITOR", "CARET", 
 		"MOD", "MAPTO", "TICK", "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN", 
 		"AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "MOD_ASSIGN", "LSHIFT_ASSIGN", 
-		"RSHIFT_ASSIGN", "URSHIFT_ASSIGN", "VERTEX_IFNULL", "AT", "DOLLAR", "Identifier", 
+		"RSHIFT_ASSIGN", "URSHIFT_ASSIGN", "NULL_COALESCE", "AT", "DOLLAR", "Identifier", 
 		"JavaLetter", "JavaLetterOrDigit", "WS", "DOC_COMMENT", "COMMENT", "LINE_COMMENT",
 	];
 
@@ -199,7 +199,7 @@ export class VertexLexer extends Lexer {
 		"OR", "INC", "DEC", "ADD", "SUB", "MUL", "DIV", "BITAND", "BITOR", "CARET", 
 		"MOD", "MAPTO", "TICK", "ADD_ASSIGN", "SUB_ASSIGN", "MUL_ASSIGN", "DIV_ASSIGN", 
 		"AND_ASSIGN", "OR_ASSIGN", "XOR_ASSIGN", "MOD_ASSIGN", "LSHIFT_ASSIGN", 
-		"RSHIFT_ASSIGN", "URSHIFT_ASSIGN", "VERTEX_IFNULL", "AT", "DOLLAR", "Identifier", 
+		"RSHIFT_ASSIGN", "URSHIFT_ASSIGN", "NULL_COALESCE", "AT", "DOLLAR", "Identifier", 
 		"WS", "DOC_COMMENT", "COMMENT", "LINE_COMMENT",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(VertexLexer._LITERAL_NAMES, VertexLexer._SYMBOLIC_NAMES, []);

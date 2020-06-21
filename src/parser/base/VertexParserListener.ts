@@ -14,7 +14,6 @@ import { PrimaryExpressionContext } from "./VertexParser";
 import { DotExpressionContext } from "./VertexParser";
 import { ArrayExpressionContext } from "./VertexParser";
 import { MethodCallExpressionContext } from "./VertexParser";
-import { IfNullExpressionContext } from "./VertexParser";
 import { NewExpressionContext } from "./VertexParser";
 import { CastExpressionContext } from "./VertexParser";
 import { PostOpExpressionContext } from "./VertexParser";
@@ -31,6 +30,7 @@ import { BitNotExpressionContext } from "./VertexParser";
 import { BitOrExpressionContext } from "./VertexParser";
 import { LogAndExpressionContext } from "./VertexParser";
 import { LogOrExpressionContext } from "./VertexParser";
+import { NullCoalesceExpressionContext } from "./VertexParser";
 import { CondExpressionContext } from "./VertexParser";
 import { AssignExpressionContext } from "./VertexParser";
 import { FormalParametersPositionalWithOptionalContext } from "./VertexParser";
@@ -280,19 +280,6 @@ export interface VertexParserListener extends ParseTreeListener {
 	exitMethodCallExpression?: (ctx: MethodCallExpressionContext) => void;
 
 	/**
-	 * Enter a parse tree produced by the `ifNullExpression`
-	 * labeled alternative in `VertexParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	enterIfNullExpression?: (ctx: IfNullExpressionContext) => void;
-	/**
-	 * Exit a parse tree produced by the `ifNullExpression`
-	 * labeled alternative in `VertexParser.expression`.
-	 * @param ctx the parse tree
-	 */
-	exitIfNullExpression?: (ctx: IfNullExpressionContext) => void;
-
-	/**
 	 * Enter a parse tree produced by the `newExpression`
 	 * labeled alternative in `VertexParser.expression`.
 	 * @param ctx the parse tree
@@ -499,6 +486,19 @@ export interface VertexParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLogOrExpression?: (ctx: LogOrExpressionContext) => void;
+
+	/**
+	 * Enter a parse tree produced by the `nullCoalesceExpression`
+	 * labeled alternative in `VertexParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterNullCoalesceExpression?: (ctx: NullCoalesceExpressionContext) => void;
+	/**
+	 * Exit a parse tree produced by the `nullCoalesceExpression`
+	 * labeled alternative in `VertexParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitNullCoalesceExpression?: (ctx: NullCoalesceExpressionContext) => void;
 
 	/**
 	 * Enter a parse tree produced by the `condExpression`

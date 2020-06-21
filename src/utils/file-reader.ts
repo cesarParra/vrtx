@@ -5,9 +5,7 @@ import File from "../parser/model/file";
 const vertexExtension = ".vrtx";
 
 export default class FileReader {
-  public static read(): File[] {
-    // TODO: Do not hardcode this
-    const sourceDirectory = "./example/src/";
+  public static read(sourceDirectory: string): File[] {
     const directoryContents = fs.readdirSync(sourceDirectory);
     return directoryContents
       .filter((currentFile) => currentFile.endsWith(vertexExtension))

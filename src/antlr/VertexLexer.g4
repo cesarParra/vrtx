@@ -220,8 +220,7 @@ MOD_ASSIGN      : '%=';
 LSHIFT_ASSIGN   : '<<=';
 RSHIFT_ASSIGN   : '>>=';
 URSHIFT_ASSIGN  : '>>>=';
-
-VERTEX_IFNULL   : '??';
+NULL_COALESCE   : '??';
 
 //
 // Additional symbols not defined in the lexical specification

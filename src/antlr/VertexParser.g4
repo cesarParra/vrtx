@@ -437,7 +437,6 @@ expression
         )                                                                                             # dotExpression
     | expression LBRACK expression RBRACK                                                             # arrayExpression
     | methodCall                                                                                      # methodCallExpression
-    | expression (VERTEX_IFNULL expression)+                                                          # ifNullExpression
     | NEW creator                                                                                     # newExpression
     | LPAREN typeRef RPAREN expression                                                                # castExpression
     | expression (INC | DEC)                                                                          # postOpExpression
@@ -454,6 +453,7 @@ expression
     | expression BITOR expression                                                                     # bitOrExpression
     | expression AND expression                                                                       # logAndExpression
     | expression OR expression                                                                        # logOrExpression
+    | expression (NULL_COALESCE expression)+                                                          # nullCoalesceExpression
     | <assoc=right> expression QUESTION expression COLON expression                                   # condExpression
     | <assoc=right> expression
       (   ASSIGN

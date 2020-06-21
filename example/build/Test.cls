@@ -5,6 +5,7 @@ public class Test {
 
   @NamespaceAccessible
   public Test(String arg1, String arg2,Object arg3,Integer arg4) {
+    String message = (arg1 != null ? arg1 : (arg3 != null ? arg3 : 'Hello '));
     System.debug(String.format('Hello {0}! Message {1} received', new List<String>{arg1,arg2}));
   }
 

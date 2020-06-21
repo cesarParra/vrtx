@@ -8,9 +8,19 @@ export default class Build extends Command {
 
   static flags = {
     help: flags.help({ char: "h" }),
+    source: flags.string({
+      char: "s",
+      required: false,
+      description: "Source directory that contains the Vertex files",
+    }),
   };
 
   async run(): Promise<void> {
-    Builder.execute();
+    const { flags } = this.parse(Build);
+    const sourceDirectory = flags.source || "./src";
+
+    // TODO: Use https://github.com/dangmai/prettier-plugin-apex
+    // to prettify after building the files
+    Builder.execute(sourceDirectory);
   }
 }

@@ -73,7 +73,7 @@
     "test": "jest",
     "version": "oclif-dev readme && git add README.md",
     "build": "rimraf ./lib && npm run lint && tsc",
-    "antlr4ts": "antlr4ts src/antlr/VertexLexer.g4 src/antlr/VertexParser.g4 -o src/parser/base/",
+    "antlr4ts": "antlr4ts -visitor src/antlr/VertexLexer.g4 src/antlr/VertexParser.g4 -o src/parser/base/",
     "lint": "eslint --fix --ext .ts ./src/"
   },
   "types": "lib/index.d.ts"

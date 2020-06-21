@@ -5,8 +5,8 @@ import FileWriter from "../utils/file-writer";
 import { APEX_METADATA, File, ApexFileBundle } from "./model";
 
 export default class Builder {
-  public static execute(): void {
-    const transcompiledFiles = FileReader.read().map((file) => {
+  public static execute(sourceDir: string): void {
+    const transcompiledFiles = FileReader.read(sourceDir).map((file) => {
       return this.transcompile(file);
     });
 
