@@ -95,10 +95,31 @@ export default class ConstructorOptionalParams implements VertexParserListener {
   }
 
   exitConstructorDeclaration(ctx: ConstructorDeclarationContext): void {
+    if (!ctx.stop) {
+      this.clear();
+      return;
+    }
+
     const formalParameters = this.formalParameters;
     const optionalParameters = this.optionalParameters;
     const constructorBuffer = new StringBuilder();
     const modifiers = this.modifiersStack[this.modifiersStack.length - 1];
+    this.buildConstructors(
+      optionalParameters,
+      constructorBuffer,
+      modifiers,
+      formalParameters
+    );
+    this.rewriter.insertAfter(ctx.stop, constructorBuffer.build());
+    this.clear();
+  }
+
+  private buildConstructors(
+    optionalParameters: OptionalParameter[],
+    constructorBuffer: StringBuilder,
+    modifiers: string[],
+    formalParameters: FormalParameter[]
+  ) {
     while (optionalParameters.length) {
       constructorBuffer.append(
         this.constructorBuilder.build(
@@ -120,10 +141,9 @@ export default class ConstructorOptionalParams implements VertexParserListener {
         });
       }
     }
-    if (ctx.stop) {
-      this.rewriter.insertAfter(ctx.stop, constructorBuffer.build());
-    }
+  }
 
+  private clear() {
     this.constructorName = "";
     this.optionalParameters = [];
     this.formalParameters = [];
