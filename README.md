@@ -19,7 +19,7 @@ $ npm install -g vrtx
 $ vrtx COMMAND
 running command...
 $ vrtx (-v|--version|version)
-vrtx/0.1.0-0 win32-x64 node-v12.17.0
+vrtx/0.2.0-0 win32-x64 node-v12.17.0
 $ vrtx --help [COMMAND]
 USAGE
   $ vrtx COMMAND
@@ -40,13 +40,14 @@ USAGE
   $ vrtx build
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help           show CLI help
+  -s, --source=source  Source directory that contains the Vertex files
 
 EXAMPLE
-  $ vertex build
+  $ vrtx build
 ```
 
-_See code: [src\commands\build.ts](https://github.com/cesarParra/vrtx/blob/v0.1.0-0/src\commands\build.ts)_
+_See code: [src\commands\build.ts](https://github.com/cesarParra/vrtx/blob/v0.2.0-0/src\commands\build.ts)_
 
 ## `vrtx help [COMMAND]`
 
