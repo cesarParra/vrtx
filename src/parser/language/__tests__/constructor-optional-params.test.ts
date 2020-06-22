@@ -9,9 +9,13 @@ import { OptionalParameter, FormalParameter } from "../../model";
 class TestConstructorBuilder implements IConstructorBuilder {
   built = 0;
   build(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     modifiers: string[],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     constructorName: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     formalParameters: FormalParameter[],
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     optionalParameters: OptionalParameter[]
   ): string {
     this.built++;
@@ -29,9 +33,9 @@ describe("Constructor Optional Parameters", () => {
 
     const rewriter = new TokenStreamRewriter(tokenStream);
     const optionalParametersListener = new ConstructorOptionalParams(
-      rewriter,
       constructorBuilder
     );
+    optionalParametersListener.rewriter = rewriter;
     const walker = new ParseTreeWalker();
     walker.walk(optionalParametersListener, tree);
   }

@@ -28,11 +28,43 @@ export default class StringBuilder {
     return this;
   }
 
-  // TODO: Use this as an easy way to build methods and constructors
-  // addMethod(
-  //   methodName: string,
-  //   params: ["string", "string"][]
-  // ): StringBuilder {}
+  addMethodSignature(
+    modifiers: string[],
+    methodName: string,
+    params: [string, string][]
+  ): StringBuilder {
+    modifiers.forEach((modifier) => {
+      this.append(modifier).append(" ");
+    });
+    this.append(methodName).append("(");
+    params.forEach((param) => {
+      const [type, identifier] = param;
+      this.append(`${type}  ${identifier}`).append(",");
+    });
+    this.removeTrailingComma();
+    this.append(")");
+    return this;
+  }
+
+  appendBlockStart(): StringBuilder {
+    this.append("{");
+    return this;
+  }
+
+  appendBlockEnd(): StringBuilder {
+    this.append("}");
+    return this;
+  }
+
+  addMethodCall(methodName: string, parameterValues: string[]): StringBuilder {
+    this.append(methodName).append("(");
+    parameterValues.forEach((param) => {
+      this.append(`${param},`);
+    });
+    this.removeTrailingComma();
+    this.append(");");
+    return this;
+  }
 
   build(): string {
     return this.buffer;

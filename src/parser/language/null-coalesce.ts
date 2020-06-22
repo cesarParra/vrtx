@@ -1,28 +1,23 @@
-import { VertexParserListener } from "../base/VertexParserListener";
-import { TokenStreamRewriter, ParserRuleContext } from "antlr4ts";
-import {
-  TerminalNode,
-  ErrorNode,
-  AbstractParseTreeVisitor,
-} from "antlr4ts/tree";
+import { TokenStreamRewriter } from "antlr4ts";
+import { AbstractParseTreeVisitor } from "antlr4ts/tree";
 import {
   ExpressionContext,
   NullCoalesceExpressionContext,
 } from "../base/VertexParser";
 import StringBuilder from "../../utils/string-builder";
 import { VertexParserVisitor } from "../base/VertexParserVisitor";
+import RewritableSupport from "./rewritable-support";
 
 export default class NullCoalesce extends AbstractParseTreeVisitor<void>
-  implements VertexParserVisitor<void> {
-  rewriter: TokenStreamRewriter;
+  implements VertexParserVisitor<void>, RewritableSupport {
+  rewriter: TokenStreamRewriter | undefined;
 
   protected defaultResult(): void {
     return;
   }
 
-  constructor(rewriter: TokenStreamRewriter) {
+  constructor() {
     super();
-    this.rewriter = rewriter;
   }
 
   visitNullCoalesceExpression(ctx: NullCoalesceExpressionContext): void {
@@ -30,11 +25,13 @@ export default class NullCoalesce extends AbstractParseTreeVisitor<void>
       return;
     }
 
-    this.rewriter.replace(
-      ctx.start.tokenIndex,
-      ctx.stop.tokenIndex,
-      this.getNodeText(ctx)
-    );
+    if (this.rewriter) {
+      this.rewriter.replace(
+        ctx.start.tokenIndex,
+        ctx.stop.tokenIndex,
+        this.getNodeText(ctx)
+      );
+    }
   }
 
   private getNodeText(ctx: ExpressionContext | undefined): string {

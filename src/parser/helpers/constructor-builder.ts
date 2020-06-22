@@ -21,24 +21,23 @@ export default class ConstructorBuilder implements IConstructorBuilder {
       .appendReturn()
       .appendReturn()
       .appendTab();
-    modifiers.forEach((modifier) => {
-      constructorOverload.append(`${modifier} `);
-    });
-    constructorOverload.append(constructorName + "(");
-    formalParameters.forEach((parameter) => {
-      constructorOverload.append(`${parameter.type}  ${parameter.id},`);
-    });
-    constructorOverload.removeTrailingComma();
-    constructorOverload.append("){ this(");
-    formalParameters.forEach((parameter) => {
-      constructorOverload.append(`${parameter.id},`);
-    });
-    optionalParameters.forEach((optionalParameter) => {
-      const parameterValue = optionalParameter.value ?? "null";
-      constructorOverload.append(`${parameterValue},`);
-    });
-    constructorOverload.removeTrailingComma();
-    constructorOverload.append("); }");
+    const params = this.getParamsTuples(formalParameters);
+    constructorOverload.addMethodSignature(modifiers, constructorName, params);
+    constructorOverload.appendBlockStart();
+
+    const parameters = [
+      ...formalParameters.map((formalParam) => formalParam.id),
+      ...optionalParameters.map((param) => param.value ?? "null"),
+    ];
+
+    constructorOverload.addMethodCall("this", parameters);
+    constructorOverload.appendBlockEnd();
     return constructorOverload.build();
+  }
+
+  private getParamsTuples(formalParameters: FormalParameter[]) {
+    return formalParameters.map((parameter) => {
+      return <[string, string]>[parameter.type, parameter.id];
+    });
   }
 }

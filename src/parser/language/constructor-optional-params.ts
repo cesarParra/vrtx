@@ -1,6 +1,3 @@
-import { VertexParserListener } from "../base/VertexParserListener";
-import { TokenStreamRewriter, ParserRuleContext } from "antlr4ts";
-import { TerminalNode, ErrorNode } from "antlr4ts/tree";
 import {
   ClassBodyDeclarationContext,
   ConstructorDeclarationContext,
@@ -12,26 +9,27 @@ import { OptionalParameter, FormalParameter } from "../model";
 import ConstructorBuilder, {
   IConstructorBuilder,
 } from "../helpers/constructor-builder";
+import RewritableSupport from "./rewritable-support";
+import { VertexParserListener } from "../base/VertexParserListener";
+import { TokenStreamRewriter, ParserRuleContext } from "antlr4ts";
+import { TerminalNode, ErrorNode } from "antlr4ts/tree";
 
-export default class ConstructorOptionalParams implements VertexParserListener {
+export default class ConstructorOptionalParams
+  implements VertexParserListener, RewritableSupport {
   visitTerminal?: (node: TerminalNode) => void;
   visitErrorNode?: (node: ErrorNode) => void;
   enterEveryRule?: (ctx: ParserRuleContext) => void;
   exitEveryRule?: (ctx: ParserRuleContext) => void;
 
-  rewriter: TokenStreamRewriter;
   constructorBuilder: IConstructorBuilder;
 
   private modifiersStack: string[][] = [];
   private constructorName = "";
   private optionalParameters: OptionalParameter[] = [];
   private formalParameters: FormalParameter[] = [];
+  rewriter: TokenStreamRewriter | undefined;
 
-  constructor(
-    rewriter: TokenStreamRewriter,
-    builder = new ConstructorBuilder()
-  ) {
-    this.rewriter = rewriter;
+  constructor(builder: IConstructorBuilder = new ConstructorBuilder()) {
     this.constructorBuilder = builder;
   }
 
@@ -87,11 +85,13 @@ export default class ConstructorOptionalParams implements VertexParserListener {
         .appendComma();
     });
     buffer.removeTrailingComma();
-    this.rewriter.replace(
-      ctx.start.tokenIndex,
-      ctx.stop?.tokenIndex,
-      buffer.build()
-    );
+    if (this.rewriter) {
+      this.rewriter.replace(
+        ctx.start.tokenIndex,
+        ctx.stop?.tokenIndex,
+        buffer.build()
+      );
+    }
   }
 
   exitConstructorDeclaration(ctx: ConstructorDeclarationContext): void {
@@ -110,7 +110,11 @@ export default class ConstructorOptionalParams implements VertexParserListener {
       modifiers,
       formalParameters
     );
-    this.rewriter.insertAfter(ctx.stop, constructorBuffer.build());
+
+    if (this.rewriter) {
+      this.rewriter.insertAfter(ctx.stop, constructorBuffer.build());
+    }
+
     this.clear();
   }
 

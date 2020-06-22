@@ -1,5 +1,5 @@
-export default interface OptionalParameter {
-  type: string;
-  id: string;
+import FormalParameter from "./formal-parameter";
+
+export default interface OptionalParameter extends FormalParameter {
   value?: string;
 }

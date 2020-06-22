@@ -9,8 +9,7 @@ export default class FileWriter {
     }
 
     const filePath = path.join(outputDir, `${file.name}.${file.extension}`);
-    fs.writeFile(filePath, file.body, "utf8", () => {
-      console.log("File processed");
-    });
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    fs.writeFile(filePath, file.body, "utf8", () => {});
   }
 }

@@ -2,9 +2,8 @@
  * @description Test class.
  */
 public class Test {
-
   @NamespaceAccessible
-  public Test(String arg1, [String arg2 = 'World!', Object arg3, Integer arg4 = 5]) {
+  public Test(final String arg1, [String arg2 = 'World!', Object arg3, Integer arg4 = 5]) {
     String message = arg1 ?? arg3 ?? 'Hello ';
     System.debug(`Hello ${arg1}! Message ${arg2} received`);
   }
@@ -18,7 +17,7 @@ public class Test {
   }
 
   public class TestInnerClass {
-    public TestInnerClass([String arg1 = 'Test From Inner class']) {
+    public TestInnerClass([String arg1 = `Test From Inner class`]) {
       System.debug(arg1);
     }
   }

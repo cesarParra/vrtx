@@ -19,8 +19,6 @@ export default class Build extends Command {
     const { flags } = this.parse(Build);
     const sourceDirectory = flags.source || "./src";
 
-    // TODO: Use https://github.com/dangmai/prettier-plugin-apex
-    // to prettify after building the files
     Builder.execute(sourceDirectory);
   }
 }

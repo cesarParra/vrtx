@@ -1,15 +1,40 @@
 import { CharStreams, CommonTokenStream, TokenStreamRewriter } from "antlr4ts";
 import { VertexLexer } from "./base/VertexLexer";
-import { VertexParser, CompilationUnitContext } from "./base/VertexParser";
+import { VertexParser } from "./base/VertexParser";
 import { ParseTreeWalker } from "antlr4ts/tree";
 import ConstructorOptionalParams from "./language/constructor-optional-params";
 import StringTemplateLiteral from "./language/string-template-literal";
 import { VertexParserListener } from "./base/VertexParserListener";
 import NullCoalesce from "./language/null-coalesce";
 import { VertexParserVisitor } from "./base/VertexParserVisitor";
+import RewritableSupport from "./language/rewritable-support";
 
 export default class Transcompiler {
   public static transcompile(contents: string): string {
+    [...this.getListeners(), ...this.getVisitors()].forEach((rewriter) => {
+      contents = this.rewrite(contents, rewriter);
+    });
+    return contents;
+  }
+
+  private static getListeners() {
+    const listeners: (VertexParserListener & RewritableSupport)[] = [];
+    listeners.push(new ConstructorOptionalParams());
+    listeners.push(new StringTemplateLiteral());
+    return listeners;
+  }
+
+  private static getVisitors() {
+    const visitors: (VertexParserVisitor<unknown> & RewritableSupport)[] = [];
+    visitors.push(new NullCoalesce());
+    return visitors;
+  }
+
+  private static rewrite(
+    contents: string,
+    listerOrVisitor: (VertexParserVisitor<unknown> | VertexParserListener) &
+      RewritableSupport
+  ) {
     const inputStream = CharStreams.fromString(contents);
     const lexer = new VertexLexer(inputStream);
     const tokenStream = new CommonTokenStream(lexer);
@@ -19,43 +44,19 @@ export default class Transcompiler {
     const tree = parser.compilationUnit();
 
     const rewriter = new TokenStreamRewriter(tokenStream);
-    this.walk(rewriter, tree);
-    this.visit(rewriter, tree);
-
+    listerOrVisitor.rewriter = rewriter;
+    if (this.isVisitor(listerOrVisitor)) {
+      listerOrVisitor.visit(tree);
+    } else {
+      const walker = new ParseTreeWalker();
+      walker.walk(listerOrVisitor, tree);
+    }
     return rewriter.getText();
   }
 
-  private static walk(
-    rewriter: TokenStreamRewriter,
-    tree: CompilationUnitContext
-  ) {
-    const listeners = this.getListeners(rewriter);
-    const walker = new ParseTreeWalker();
-    listeners.forEach((listener) => {
-      walker.walk(listener, tree);
-    });
-  }
-
-  private static getListeners(rewriter: TokenStreamRewriter) {
-    const listeners: VertexParserListener[] = [];
-    listeners.push(new ConstructorOptionalParams(rewriter));
-    listeners.push(new StringTemplateLiteral(rewriter));
-    return listeners;
-  }
-
-  private static visit(
-    rewriter: TokenStreamRewriter,
-    tree: CompilationUnitContext
-  ) {
-    const visitors = this.getVisitors(rewriter);
-    visitors.forEach((visitor) => {
-      visitor.visit(tree);
-    });
-  }
-
-  private static getVisitors(rewriter: TokenStreamRewriter) {
-    const visitors: VertexParserVisitor<unknown>[] = [];
-    visitors.push(new NullCoalesce(rewriter));
-    return visitors;
+  private static isVisitor(
+    rewriter: VertexParserVisitor<unknown> | VertexParserListener
+  ): rewriter is VertexParserVisitor<unknown> {
+    return (rewriter as VertexParserVisitor<unknown>).visit !== undefined;
   }
 }
