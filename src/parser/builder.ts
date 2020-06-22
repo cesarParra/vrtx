@@ -27,6 +27,8 @@ export default class Builder {
   private static buildMainFile(file: File) {
     let translatedCode = Transcompiler.transcompile(file.body);
     translatedCode = prettier.format(translatedCode, {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       parser: "apex",
     });
     return {
