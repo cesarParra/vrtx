@@ -10,6 +10,7 @@ export interface IConstructorBuilder {
   ) => string;
 }
 
+// TODO: Params can have modifiers (like final) so let's make sure that they are respected
 export default class ConstructorBuilder implements IConstructorBuilder {
   build(
     modifiers: string[],

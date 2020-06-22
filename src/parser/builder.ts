@@ -3,6 +3,7 @@ import rimraf from "rimraf";
 import Transcompiler from "./transcompiler";
 import FileWriter from "../utils/file-writer";
 import { APEX_METADATA, File, ApexFileBundle } from "./model";
+import prettier from "prettier";
 
 export default class Builder {
   public static execute(sourceDir: string): void {
@@ -24,9 +25,13 @@ export default class Builder {
   }
 
   private static buildMainFile(file: File) {
+    let translatedCode = Transcompiler.transcompile(file.body);
+    translatedCode = prettier.format(translatedCode, {
+      parser: "apex",
+    });
     return {
       name: file.name,
-      body: Transcompiler.transcompile(file.body),
+      body: translatedCode,
       extension: "cls",
     } as File;
   }
