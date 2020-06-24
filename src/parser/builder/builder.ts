@@ -3,8 +3,8 @@ import rimraf from "rimraf";
 import Translator from "../translator/translator";
 import FileWriter from "../../utils/file-writer";
 import { APEX_METADATA, File, ApexFileBundle } from "../model";
-import prettier from "prettier";
 import Configuration from "./configuration";
+import prettier from "prettier";
 
 export default class Builder {
   public static execute(): void {

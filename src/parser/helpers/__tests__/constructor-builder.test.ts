@@ -1,17 +1,17 @@
-import ConstructorBuilder from "../constructor-builder";
+import MethodBuilder from "../method-builder";
 import { purgeWhitespaces } from "../../../utils/string";
 import FormalParameter from "../../model/formal-parameter";
 import OptionalParameter from "../../model/optional-parameter";
 
 describe("Constructor Builder", () => {
   test("No modifiers, formal params or optional params", () => {
-    let result = new ConstructorBuilder().build([], "Test", [], []);
+    let result = new MethodBuilder().build([], "Test", [], [], true);
     result = purgeWhitespaces(result);
     expect(result).toBe("Test(){this();}");
   });
 
   test("With modifiers, no formal params or optional params", () => {
-    let result = new ConstructorBuilder().build(["public"], "Test", [], []);
+    let result = new MethodBuilder().build(["public"], "Test", [], [], false);
     result = purgeWhitespaces(result);
     expect(result).toBe("publicTest(){this();}");
   });
@@ -27,11 +27,12 @@ describe("Constructor Builder", () => {
         id: "arg2",
       },
     ];
-    let result = new ConstructorBuilder().build(
+    let result = new MethodBuilder().build(
       ["public"],
       "Test",
       formalParams,
-      []
+      [],
+      false
     );
     result = purgeWhitespaces(result);
     expect(result).toBe("publicTest(Stringarg1,Integerarg2){this(arg1,arg2);}");
@@ -59,11 +60,12 @@ describe("Constructor Builder", () => {
         id: "arg4",
       },
     ];
-    let result = new ConstructorBuilder().build(
+    let result = new MethodBuilder().build(
       ["public"],
       "Test",
       formalParams,
-      optionalParams
+      optionalParams,
+      false
     );
     result = purgeWhitespaces(result);
     expect(result).toBe(

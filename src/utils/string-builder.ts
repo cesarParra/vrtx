@@ -31,11 +31,13 @@ export default class StringBuilder {
   addMethodSignature(
     modifiers: string[],
     methodName: string,
-    params: [string, string][]
+    params: [string, string][],
+    returnType?: string
   ): StringBuilder {
     modifiers.forEach((modifier) => {
       this.append(modifier).append(" ");
     });
+    if (returnType) this.append(returnType).append(" ");
     this.append(methodName).append("(");
     params.forEach((param) => {
       const [type, identifier] = param;
@@ -56,7 +58,14 @@ export default class StringBuilder {
     return this;
   }
 
-  addMethodCall(methodName: string, parameterValues: string[]): StringBuilder {
+  addMethodCall(
+    methodName: string,
+    parameterValues: string[],
+    shouldReturn: boolean
+  ): StringBuilder {
+    if (shouldReturn) {
+      this.append("return ");
+    }
     this.append(methodName).append("(");
     parameterValues.forEach((param) => {
       this.append(`${param},`);

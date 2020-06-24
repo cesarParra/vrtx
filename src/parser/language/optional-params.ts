@@ -2,34 +2,34 @@ import {
   ClassBodyDeclarationContext,
   ConstructorDeclarationContext,
   FormalParameterListContext,
+  MethodDeclarationContext,
   OptionalPositionalFormalParametersContext,
 } from "../base/VertexParser";
 import StringBuilder from "../../utils/string-builder";
 import { OptionalParameter, FormalParameter } from "../model";
-import ConstructorBuilder, {
-  IConstructorBuilder,
-} from "../helpers/constructor-builder";
+import MethodBuilder, { IMethodBuilder } from "../helpers/method-builder";
 import RewritableSupport from "./rewritable-support";
 import { VertexParserListener } from "../base/VertexParserListener";
 import { TokenStreamRewriter, ParserRuleContext } from "antlr4ts";
 import { TerminalNode, ErrorNode } from "antlr4ts/tree";
 
-export default class ConstructorOptionalParams
+export default class OptionalParams
   implements VertexParserListener, RewritableSupport {
   visitTerminal?: (node: TerminalNode) => void;
   visitErrorNode?: (node: ErrorNode) => void;
   enterEveryRule?: (ctx: ParserRuleContext) => void;
   exitEveryRule?: (ctx: ParserRuleContext) => void;
 
-  constructorBuilder: IConstructorBuilder;
+  constructorBuilder: IMethodBuilder;
 
+  private returnType = "";
   private modifiersStack: string[][] = [];
-  private constructorName = "";
+  private methodName = "";
   private optionalParameters: OptionalParameter[] = [];
   private formalParameters: FormalParameter[] = [];
   rewriter: TokenStreamRewriter | undefined;
 
-  constructor(builder: IConstructorBuilder = new ConstructorBuilder()) {
+  constructor(builder: IMethodBuilder = new MethodBuilder()) {
     this.constructorBuilder = builder;
   }
 
@@ -46,8 +46,13 @@ export default class ConstructorOptionalParams
     this.modifiersStack.pop();
   }
 
+  enterMethodDeclaration(ctx: MethodDeclarationContext): void {
+    this.methodName = ctx.id().text;
+    this.returnType = ctx.typeRef()?.text || "void";
+  }
+
   enterConstructorDeclaration(ctx: ConstructorDeclarationContext): void {
-    this.constructorName = ctx.qualifiedName().text;
+    this.methodName = ctx.qualifiedName().text;
   }
 
   enterOptionalPositionalFormalParameters(
@@ -94,6 +99,32 @@ export default class ConstructorOptionalParams
     }
   }
 
+  exitMethodDeclaration(ctx: MethodDeclarationContext): void {
+    if (!ctx.stop) {
+      this.clear();
+      return;
+    }
+
+    const formalParameters = this.formalParameters;
+    const optionalParameters = this.optionalParameters;
+    const constructorBuffer = new StringBuilder();
+    const modifiers = this.modifiersStack[this.modifiersStack.length - 1];
+    this.buildMethods(
+      optionalParameters,
+      constructorBuffer,
+      modifiers,
+      formalParameters,
+      false,
+      this.returnType
+    );
+
+    if (this.rewriter) {
+      this.rewriter.insertAfter(ctx.stop, constructorBuffer.build());
+    }
+
+    this.clear();
+  }
+
   exitConstructorDeclaration(ctx: ConstructorDeclarationContext): void {
     if (!ctx.stop) {
       this.clear();
@@ -104,11 +135,12 @@ export default class ConstructorOptionalParams
     const optionalParameters = this.optionalParameters;
     const constructorBuffer = new StringBuilder();
     const modifiers = this.modifiersStack[this.modifiersStack.length - 1];
-    this.buildConstructors(
+    this.buildMethods(
       optionalParameters,
       constructorBuffer,
       modifiers,
-      formalParameters
+      formalParameters,
+      true
     );
 
     if (this.rewriter) {
@@ -118,19 +150,23 @@ export default class ConstructorOptionalParams
     this.clear();
   }
 
-  private buildConstructors(
+  private buildMethods(
     optionalParameters: OptionalParameter[],
     constructorBuffer: StringBuilder,
     modifiers: string[],
-    formalParameters: FormalParameter[]
+    formalParameters: FormalParameter[],
+    isConstructor: boolean,
+    returnType?: string
   ) {
     while (optionalParameters.length) {
       constructorBuffer.append(
         this.constructorBuilder.build(
           modifiers,
-          this.constructorName,
+          this.methodName,
           formalParameters,
-          optionalParameters
+          optionalParameters,
+          isConstructor,
+          returnType
         )
       );
 
@@ -148,7 +184,7 @@ export default class ConstructorOptionalParams
   }
 
   private clear() {
-    this.constructorName = "";
+    this.methodName = "";
     this.optionalParameters = [];
     this.formalParameters = [];
   }

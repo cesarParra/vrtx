@@ -1,29 +1,38 @@
 import { FormalParameter, OptionalParameter } from "../model";
 import StringBuilder from "../../utils/string-builder";
 
-export interface IConstructorBuilder {
+export interface IMethodBuilder {
   build: (
     modifiers: string[],
-    constructorName: string,
+    methodName: string,
     formalParameters: FormalParameter[],
-    optionalParameters: OptionalParameter[]
+    optionalParameters: OptionalParameter[],
+    isConstructor: boolean,
+    returnType?: string
   ) => string;
 }
 
 // TODO: Params can have modifiers (like final) so let's make sure that they are respected
-export default class ConstructorBuilder implements IConstructorBuilder {
+export default class MethodBuilder implements IMethodBuilder {
   build(
     modifiers: string[],
-    constructorName: string,
+    methodName: string,
     formalParameters: FormalParameter[],
-    optionalParameters: OptionalParameter[]
+    optionalParameters: OptionalParameter[],
+    isConstructor: boolean,
+    returnType?: string
   ): string {
     const constructorOverload = new StringBuilder()
       .appendReturn()
       .appendReturn()
       .appendTab();
     const params = this.getParamsTuples(formalParameters);
-    constructorOverload.addMethodSignature(modifiers, constructorName, params);
+    constructorOverload.addMethodSignature(
+      modifiers,
+      methodName,
+      params,
+      returnType
+    );
     constructorOverload.appendBlockStart();
 
     const parameters = [
@@ -31,7 +40,12 @@ export default class ConstructorBuilder implements IConstructorBuilder {
       ...optionalParameters.map((param) => param.value ?? "null"),
     ];
 
-    constructorOverload.addMethodCall("this", parameters);
+    const methodNameToCall = isConstructor ? "this" : methodName;
+    constructorOverload.addMethodCall(
+      methodNameToCall,
+      parameters,
+      !isConstructor && returnType !== "void"
+    );
     constructorOverload.appendBlockEnd();
     return constructorOverload.build();
   }

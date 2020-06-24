@@ -12,12 +12,16 @@ public class Test {
    * @description Example method.
    * @return String.
    */
-  public static String execute() {
+  public static String execute(String arg1, [String arg2]) {
     return 'test';
   }
 
-  public class TestInnerClass {
-    public TestInnerClass([String arg1 = `Test From Inner class`]) {
+public void executeVoid([String arg1, Integer arg2 = 5]) {
+    System.debug('Test');
+  }
+
+  public class InnerClass {
+    public InnerClass([String arg1 = `Test From Inner class`]) {
       System.debug(arg1);
     }
   }

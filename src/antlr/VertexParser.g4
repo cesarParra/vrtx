@@ -137,10 +137,8 @@ memberDeclaration
 
 
 methodDeclaration
-    : (typeRef|VOID) id formalParameters
-      (   block
-      |   SEMI
-      )
+    : (typeRef|VOID) id formalParameters ( block | SEMI )
+    | (typeRef|VOID) id formalParametersWithOptional ( block | SEMI )
     ;
 
 constructorDeclaration

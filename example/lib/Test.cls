@@ -32,16 +32,32 @@ public class Test {
    * @description Example method.
    * @return String.
    */
-  public static String execute() {
+  public static String execute(String arg1, String arg2) {
     return 'test';
   }
 
-  public class TestInnerClass {
-    public TestInnerClass(String arg1) {
+  public static String execute(String arg1) {
+    return execute(arg1, null);
+  }
+
+  public void executeVoid(String arg1, Integer arg2) {
+    System.debug('Test');
+  }
+
+  public void executeVoid() {
+    executeVoid(null, 5);
+  }
+
+  public void executeVoid(String arg1) {
+    executeVoid(arg1, 5);
+  }
+
+  public class InnerClass {
+    public InnerClass(String arg1) {
       System.debug(arg1);
     }
 
-    public TestInnerClass() {
+    public InnerClass() {
       this('Test From Inner class');
     }
   }
