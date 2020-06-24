@@ -44,7 +44,7 @@ export default class MethodBuilder implements IMethodBuilder {
     constructorOverload.addMethodCall(
       methodNameToCall,
       parameters,
-      !isConstructor && returnType !== "void"
+      !isConstructor && !!returnType && returnType !== "void"
     );
     constructorOverload.appendBlockEnd();
     return constructorOverload.build();

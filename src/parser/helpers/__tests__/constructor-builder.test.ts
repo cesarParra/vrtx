@@ -11,7 +11,7 @@ describe("Constructor Builder", () => {
   });
 
   test("With modifiers, no formal params or optional params", () => {
-    let result = new MethodBuilder().build(["public"], "Test", [], [], false);
+    let result = new MethodBuilder().build(["public"], "Test", [], [], true);
     result = purgeWhitespaces(result);
     expect(result).toBe("publicTest(){this();}");
   });
@@ -32,7 +32,7 @@ describe("Constructor Builder", () => {
       "Test",
       formalParams,
       [],
-      false
+      true
     );
     result = purgeWhitespaces(result);
     expect(result).toBe("publicTest(Stringarg1,Integerarg2){this(arg1,arg2);}");
@@ -65,7 +65,7 @@ describe("Constructor Builder", () => {
       "Test",
       formalParams,
       optionalParams,
-      false
+      true
     );
     result = purgeWhitespaces(result);
     expect(result).toBe(
