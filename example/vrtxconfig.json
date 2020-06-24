@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "targetApiVersion": 48.0,
+    "rootDir": "src",
+    "targetDir": "lib"
+  }
+}

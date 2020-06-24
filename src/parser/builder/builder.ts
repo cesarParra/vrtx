@@ -1,23 +1,27 @@
-import FileReader from "../utils/file-reader";
+import FileReader from "../../utils/file-reader";
 import rimraf from "rimraf";
-import Transcompiler from "./transcompiler";
-import FileWriter from "../utils/file-writer";
-import { APEX_METADATA, File, ApexFileBundle } from "./model";
+import Translator from "../translator/translator";
+import FileWriter from "../../utils/file-writer";
+import { APEX_METADATA, File, ApexFileBundle } from "../model";
 import prettier from "prettier";
+import Configuration from "./configuration";
 
 export default class Builder {
-  public static execute(sourceDir: string): void {
-    const transcompiledFiles = FileReader.read(sourceDir).map((file) => {
-      return this.transcompile(file);
-    });
+  public static execute(): void {
+    const config = Configuration.get();
+    const translatedFiles = FileReader.read(config.compilerOptions.rootDir).map(
+      (file) => {
+        return this.translate(file);
+      }
+    );
 
-    const outputDir = "./example/build/";
+    const outputDir = config.compilerOptions.targetDir;
     rimraf(outputDir, () => {
-      this.createApexFiles(outputDir, transcompiledFiles);
+      this.createApexFiles(outputDir, translatedFiles);
     });
   }
 
-  private static transcompile(file: File): ApexFileBundle {
+  private static translate(file: File): ApexFileBundle {
     return {
       mainFile: this.buildMainFile(file),
       metadataFile: this.buildMetadataFile(file),
@@ -25,7 +29,7 @@ export default class Builder {
   }
 
   private static buildMainFile(file: File) {
-    let translatedCode = Transcompiler.transcompile(file.body);
+    let translatedCode = Translator.translate(file.body);
     translatedCode = prettier.format(translatedCode, {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

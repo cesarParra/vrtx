@@ -1,16 +1,16 @@
 import { CharStreams, CommonTokenStream, TokenStreamRewriter } from "antlr4ts";
-import { VertexLexer } from "./base/VertexLexer";
-import { VertexParser } from "./base/VertexParser";
+import { VertexLexer } from "../base/VertexLexer";
+import { VertexParser } from "../base/VertexParser";
 import { ParseTreeWalker } from "antlr4ts/tree";
-import ConstructorOptionalParams from "./language/constructor-optional-params";
-import StringTemplateLiteral from "./language/string-template-literal";
-import { VertexParserListener } from "./base/VertexParserListener";
-import NullCoalesce from "./language/null-coalesce";
-import { VertexParserVisitor } from "./base/VertexParserVisitor";
-import RewritableSupport from "./language/rewritable-support";
+import ConstructorOptionalParams from "../language/constructor-optional-params";
+import StringTemplateLiteral from "../language/string-template-literal";
+import { VertexParserListener } from "../base/VertexParserListener";
+import NullCoalesce from "../language/null-coalesce";
+import { VertexParserVisitor } from "../base/VertexParserVisitor";
+import RewritableSupport from "../language/rewritable-support";
 
-export default class Transcompiler {
-  public static transcompile(contents: string): string {
+export default class Translator {
+  public static translate(contents: string): string {
     [...this.getListeners(), ...this.getVisitors()].forEach((rewriter) => {
       contents = this.rewrite(contents, rewriter);
     });
