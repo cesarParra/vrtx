@@ -1,0 +1,6 @@
+public class AnotherClass {
+  @TestVisible
+  protected AnotherClass([String greeting = 'Hello World!']) {
+    System.debug(greeting);
+  }
+}

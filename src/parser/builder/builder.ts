@@ -39,6 +39,7 @@ export default class Builder {
       name: file.name,
       body: translatedCode,
       extension: "cls",
+      directory: file.directory,
     } as File;
   }
 
@@ -55,8 +56,8 @@ export default class Builder {
     apexBundles: ApexFileBundle[]
   ): void {
     apexBundles.forEach((bundle) => {
-      FileWriter.createFile(outputDir, bundle.mainFile);
-      FileWriter.createFile(outputDir, bundle.metadataFile);
+      FileWriter.createFile(bundle.mainFile.directory, bundle.mainFile);
+      FileWriter.createFile(bundle.mainFile.directory, bundle.metadataFile);
     });
   }
 }
