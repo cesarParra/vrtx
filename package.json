@@ -57,7 +57,7 @@
   ],
   "homepage": "https://github.com/cesarParra/vrtx",
   "keywords": [
-    "oclif"
+    "vertex", "vrtx", "apex", "salesforce", "language"
   ],
   "license": "MIT",
   "main": "lib/index.js",
