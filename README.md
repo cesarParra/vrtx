@@ -157,7 +157,7 @@ $ npm install -g vrtx
 $ vrtx COMMAND
 running command...
 $ vrtx (-v|--version|version)
-vrtx/0.5.0 win32-x64 node-v12.17.0
+vrtx/0.6.0 win32-x64 node-v12.17.0
 $ vrtx --help [COMMAND]
 USAGE
   $ vrtx COMMAND
@@ -184,7 +184,7 @@ EXAMPLE
   $ vrtx build
 ```
 
-_See code: [src\commands\build.ts](https://github.com/cesarParra/vrtx/blob/v0.5.0/src\commands\build.ts)_
+_See code: [src\commands\build.ts](https://github.com/cesarParra/vrtx/blob/v0.6.0/src\commands\build.ts)_
 
 ## `vrtx help [COMMAND]`
 
